@@ -29,24 +29,22 @@ const Library = ({ token, exercises, fetchExercises }) => {
 
 const filterExercises = state => {
 	const exercises = state.exerciseList.data;
-	const { name, category, bodypart } = state.filter;
+	const { name, type, muscle } = state.exerciseFilter;
 
 	let filteredExercises = exercises.filter(exercise =>
 		exercise.name.includes(name.toLowerCase())
 	);
 
 	filteredExercises =
-		category === "all"
+		type === "all"
 			? filteredExercises
-			: filteredExercises.filter(
-					exercise => exercise.category === category
-			  );
+			: filteredExercises.filter(exercise => exercise.category === type);
 
 	filteredExercises =
-		bodypart === "all"
+		muscle === "all"
 			? filteredExercises
 			: filteredExercises.filter(
-					exercise => exercise.bodypart === bodypart
+					exercise => exercise.bodypart === muscle
 			  );
 
 	return filteredExercises;

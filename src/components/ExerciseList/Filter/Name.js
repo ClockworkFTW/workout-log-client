@@ -1,18 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { setNameFilter } from "../../../reducers/exercise-filter";
-import Input from "../../common/Input";
+import { setExerciseFilter } from "../../../reducers/exercise-filter";
+import { Input } from "../../common";
 
-const Search = ({ nameFilter, setNameFilter }) => (
+const Name = ({ nameFilter, setExerciseFilter }) => (
 	<Input
 		type="text"
 		placeholder="search"
+		margin="0px 10px 0px 0px"
 		value={nameFilter}
-		setValue={setNameFilter}
+		onChange={event => setExerciseFilter("name", event.target.value)}
 	/>
 );
 
-const mapStateToProps = state => ({ nameFilter: state.filter.name });
+const mapStateToProps = state => ({ nameFilter: state.exerciseFilter.name });
 
-export default connect(mapStateToProps, { setNameFilter })(Search);
+export default connect(mapStateToProps, { setExerciseFilter })(Name);

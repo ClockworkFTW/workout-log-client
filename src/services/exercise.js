@@ -16,8 +16,8 @@ const read = async token => {
 	return result.data;
 };
 
-const update = async (token, id, exercise) => {
-	const result = await axios.put(`${baseUrl}/${id}`, exercise, {
+const update = async (token, exercise) => {
+	const result = await axios.put(`${baseUrl}/${exercise._id}`, exercise, {
 		headers: { Authorization: `Bearer ${token}` }
 	});
 	return result.data;

@@ -1,6 +1,6 @@
-export const difficulties = ["beginner", "intermediate", "advanced"];
+export const difficulty = ["beginner", "intermediate", "advanced"];
 
-export const categories = [
+export const type = [
 	"barbell",
 	"dumbbell",
 	"machine",
@@ -9,7 +9,7 @@ export const categories = [
 	"other"
 ];
 
-export const bodyparts = [
+export const muscle = [
 	"quadriceps",
 	"hamstrings",
 	"glutes",

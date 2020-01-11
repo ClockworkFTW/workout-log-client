@@ -6,6 +6,7 @@ const highlight = "#F56565";
 const fill = "#4b5668";
 
 const StyledAnatomySVG = styled(AnatomySVG)`
+	display: block;
 	width: ${props => props.width};
 	height: auto;
 	path {

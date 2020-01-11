@@ -1,9 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 import Filter from "./Filter";
-import Button from "../common/Button";
+import { Button } from "../common";
+import { newExercise } from "../../reducers/exercise-editor";
 
 const Container = styled.div`
 	display: flex;
@@ -11,18 +12,11 @@ const Container = styled.div`
 	padding: 20px;
 `;
 
-const Menu = () => (
+const Menu = ({ newExercise }) => (
 	<Container>
 		<Filter />
-		<Link to="exercise-editor">
-			<Button
-				width="90px"
-				icon={["fas", "plus-square"]}
-				text="create"
-				render={true}
-			/>
-		</Link>
+		<Button onClick={newExercise}>new</Button>
 	</Container>
 );
 
-export default Menu;
+export default connect(null, { newExercise })(Menu);
