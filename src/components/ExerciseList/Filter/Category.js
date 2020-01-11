@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { setCategoryFilter } from "../../../reducers/filter";
+import { setCategoryFilter } from "../../../reducers/exercise-filter";
 import SelectInput from "../../common/SelectInput";
 import { categories } from "../../../config";
 

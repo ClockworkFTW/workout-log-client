@@ -1,5 +1,3 @@
-import workoutServices from "../services/workout";
-
 const INIT_WORKOUTS = "INIT_WORKOUTS";
 
 const INITIAL_STATE = {
@@ -8,7 +6,7 @@ const INITIAL_STATE = {
 	error: null
 };
 
-const workoutReducer = (state = INITIAL_STATE, action) => {
+const workoutListReducer = (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		case INIT_WORKOUTS:
 			return state;
@@ -17,4 +15,4 @@ const workoutReducer = (state = INITIAL_STATE, action) => {
 	}
 };
 
-export default workoutReducer;
+export default workoutListReducer;

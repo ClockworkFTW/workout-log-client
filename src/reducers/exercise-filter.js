@@ -18,7 +18,7 @@ const INITIAL_STATE = {
 	bodypart: "all"
 };
 
-const filterReducer = (state = INITIAL_STATE, action) => {
+const exerciseFilterReducer = (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		case SET_NAME_FILTER:
 			return { ...state, name: action.name };
@@ -31,4 +31,4 @@ const filterReducer = (state = INITIAL_STATE, action) => {
 	}
 };
 
-export default filterReducer;
+export default exerciseFilterReducer;

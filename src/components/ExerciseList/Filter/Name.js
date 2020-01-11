@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { setNameFilter } from "../../../reducers/filter";
+import { setNameFilter } from "../../../reducers/exercise-filter";
 import Input from "../../common/Input";
 
 const Search = ({ nameFilter, setNameFilter }) => (

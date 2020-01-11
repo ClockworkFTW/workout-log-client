@@ -3,9 +3,15 @@ import styled from "styled-components";
 
 import MainLayout from "./common/MainLayout";
 
+const Container = styled.div`
+	padding: 20px;
+`;
+
 const Schedule = () => (
 	<MainLayout>
-		<h1>Schedule</h1>
+		<Container>
+			<h1>Schedule</h1>
+		</Container>
 	</MainLayout>
 );
 

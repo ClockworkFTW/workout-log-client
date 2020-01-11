@@ -1,8 +1,7 @@
 import React from "react";
-import { connect } from "react-redux";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-import { setActive, setEditing } from "../../reducers/exercise";
 import Button from "../common/Button";
 
 const Container = styled.div`
@@ -48,7 +47,7 @@ const Buttons = styled.div`
 	justify-content: space-between;
 `;
 
-const Card = ({ exercise, setActive, setEditing }) => {
+const Card = ({ exercise }) => {
 	return (
 		<Container>
 			<Content>
@@ -57,23 +56,17 @@ const Card = ({ exercise, setActive, setEditing }) => {
 				<Bodypart>{exercise.bodypart}</Bodypart>
 			</Content>
 			<Buttons>
-				<Button
-					icon={["fas", "expand"]}
-					text="view"
-					width="70px"
-					render={true}
-					onClick={() => setActive(exercise)}
-				/>
-				<Button
-					icon={["fas", "pencil-alt"]}
-					text="edit"
-					width="70px"
-					render={!exercise.default}
-					onClick={() => setEditing({ ...exercise, new: false })}
-				/>
+				<Link to={`/exercise-list/${exercise._id}`}>
+					<Button
+						icon={["fas", "expand"]}
+						text="view"
+						width="70px"
+						render={true}
+					/>
+				</Link>
 			</Buttons>
 		</Container>
 	);
 };
 
-export default connect(null, { setActive, setEditing })(Card);
+export default Card;

@@ -10,7 +10,9 @@ import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import SignOut from "./components/SignOut";
 import Dashboard from "./components/Dashboard";
-import Exercises from "./components/Exercises";
+import ExerciseList from "./components/ExerciseList";
+import ExerciseView from "./components/ExerciseView";
+import ExerciseEditor from "./components/ExerciseEditor";
 import Workouts from "./components/Workouts";
 import Schedule from "./components/Schedule";
 
@@ -40,8 +42,14 @@ const App = ({ userInit }) => {
 				<PrivateRoute path="/dashboard">
 					<Dashboard />
 				</PrivateRoute>
-				<PrivateRoute path="/exercises">
-					<Exercises />
+				<PrivateRoute path="/exercise-list" exact>
+					<ExerciseList />
+				</PrivateRoute>
+				<PrivateRoute path="/exercise-list/:id">
+					<ExerciseView />
+				</PrivateRoute>
+				<PrivateRoute path="/exercise-editor">
+					<ExerciseEditor />
 				</PrivateRoute>
 				<PrivateRoute path="/workouts">
 					<Workouts />

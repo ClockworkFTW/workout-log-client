@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { Droppable } from "react-beautiful-dnd";
 
-import { readExercise } from "../../../reducers/exercise";
+import { fetchExercises } from "../../../reducers/exercise-list";
 import Item from "./Item";
 
 const Container = styled.div`
@@ -13,34 +12,25 @@ const Container = styled.div`
 	overflow: scroll;
 `;
 
-const Picker = ({ token, exercises, readExercise }) => {
+const Picker = ({ token, exercises, fetchExercises }) => {
 	useEffect(() => {
 		if (exercises.length === 0) {
-			readExercise(token);
+			fetchExercises(token);
 		}
-	});
+	}, []);
 
 	return (
-		<Droppable droppableId="workout-picker">
-			{(provided, snapshot) => (
-				<Container ref={provided.innerRef} {...provided.droppableProps}>
-					{exercises.map((exercise, index) => (
-						<Item
-							key={exercise._id}
-							exercise={exercise}
-							index={index}
-						/>
-					))}
-					{provided.placeholder}
-				</Container>
-			)}
-		</Droppable>
+		<Container>
+			{exercises.map(exercise => (
+				<Item key={exercise._id} exercise={exercise} />
+			))}
+		</Container>
 	);
 };
 
 const mapStateToProps = state => ({
 	token: state.user.data.token,
-	exercises: state.exercises.data
+	exercises: state.exerciseList.data
 });
 
-export default connect(mapStateToProps, { readExercise })(Picker);
+export default connect(mapStateToProps, { fetchExercises })(Picker);

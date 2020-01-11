@@ -32,7 +32,7 @@ const Sidebar = () => (
 				<Icon icon={["fas", "tachometer-alt"]} />
 				dashboard
 			</Link>
-			<Link to="/exercises">
+			<Link to="/exercise-list">
 				<Icon icon={["fas", "dumbbell"]} />
 				exercises
 			</Link>

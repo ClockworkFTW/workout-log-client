@@ -1,6 +1,5 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
-import { DragDropContext } from "react-beautiful-dnd";
 
 import MainLayout from "../common/MainLayout";
 import Menu from "./Menu";
@@ -12,22 +11,14 @@ const Main = styled.div`
 	height: calc(100% - 56px);
 `;
 
-const Workouts = () => {
-	const onDragEnd = useCallback(() => {
-		// the only one that is required
-	}, []);
-
-	return (
-		<MainLayout>
-			<Menu />
-			<Main>
-				<DragDropContext>
-					<Picker />
-					<Editor />
-				</DragDropContext>
-			</Main>
-		</MainLayout>
-	);
-};
+const Workouts = () => (
+	<MainLayout>
+		<Menu />
+		<Main>
+			<Picker />
+			<Editor />
+		</Main>
+	</MainLayout>
+);
 
 export default Workouts;

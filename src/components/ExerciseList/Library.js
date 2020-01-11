@@ -2,21 +2,23 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { readExercise } from "../../reducers/exercise";
 import Card from "./Card";
+import { fetchExercises } from "../../reducers/exercise-list";
 
 const Container = styled.div`
-	padding: 0px 10px 10px 10px;
+	height: calc(100% - 70px);
+	padding: 0px 10px;
+	overflow: scroll;
 `;
 
-const Library = ({ token, exercises, readExercise, active, editing }) => {
+const Library = ({ token, exercises, fetchExercises }) => {
 	useEffect(() => {
 		if (exercises.length === 0) {
-			readExercise(token);
+			fetchExercises(token);
 		}
 	}, []);
 
-	return active || editing ? null : (
+	return (
 		<Container>
 			{exercises.map(exercise => (
 				<Card key={exercise._id} exercise={exercise} />
@@ -26,7 +28,7 @@ const Library = ({ token, exercises, readExercise, active, editing }) => {
 };
 
 const filterExercises = state => {
-	const exercises = state.exercises.data;
+	const exercises = state.exerciseList.data;
 	const { name, category, bodypart } = state.filter;
 
 	let filteredExercises = exercises.filter(exercise =>
@@ -52,9 +54,7 @@ const filterExercises = state => {
 
 const mapStateToProps = state => ({
 	token: state.user.data.token,
-	exercises: filterExercises(state),
-	active: state.exercises.active,
-	editing: state.exercises.editing
+	exercises: filterExercises(state)
 });
 
-export default connect(mapStateToProps, { readExercise })(Library);
+export default connect(mapStateToProps, { fetchExercises })(Library);
