@@ -15,7 +15,7 @@ const Container = styled.div`
 	border: 1px solid #e2e8f0;
 `;
 
-const Item = ({ exercise, addExercise }) => (
+const Exercise = ({ exercise, addExercise }) => (
 	<Container>
 		<Group>
 			<Header3>{exercise.name}</Header3>
@@ -25,4 +25,4 @@ const Item = ({ exercise, addExercise }) => (
 	</Container>
 );
 
-export default connect(null, { addExercise })(Item);
+export default connect(null, { addExercise })(Exercise);

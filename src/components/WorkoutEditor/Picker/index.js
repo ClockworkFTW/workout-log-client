@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { fetchExercises } from "../../../reducers/exercise-list";
-import Item from "./Item";
+import Exercise from "./Exercise";
 
 const Container = styled.div`
 	flex: 0 0 300px;
@@ -22,7 +22,7 @@ const Picker = ({ token, exercises, fetchExercises }) => {
 	return (
 		<Container>
 			{exercises.map(exercise => (
-				<Item key={exercise._id} exercise={exercise} />
+				<Exercise key={exercise._id} exercise={exercise} />
 			))}
 		</Container>
 	);

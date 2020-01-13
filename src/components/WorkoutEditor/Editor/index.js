@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 import { initWorkout, reorderExercise } from "../../../reducers/workout-editor";
-import Item from "./Item";
+import Exercise from "./Exercise";
 
 const Container = styled.div`
 	width: 100%;
@@ -18,10 +18,7 @@ const Editor = ({ initWorkout, exercises, reorderExercise }) => {
 		initWorkout();
 	}, []);
 
-	const onDragEnd = useCallback(result => {
-		console.log(result);
-		reorderExercise(result);
-	}, []);
+	const onDragEnd = useCallback(result => reorderExercise(result), []);
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
@@ -32,7 +29,7 @@ const Editor = ({ initWorkout, exercises, reorderExercise }) => {
 						{...provided.droppableProps}
 					>
 						{exercises.map((exercise, index) => (
-							<Item
+							<Exercise
 								key={exercise.dragId}
 								exercise={exercise}
 								index={index}
