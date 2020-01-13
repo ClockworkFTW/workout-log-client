@@ -38,14 +38,12 @@ const filterExercises = state => {
 	filteredExercises =
 		type === "all"
 			? filteredExercises
-			: filteredExercises.filter(exercise => exercise.category === type);
+			: filteredExercises.filter(exercise => exercise.type === type);
 
 	filteredExercises =
 		muscle === "all"
 			? filteredExercises
-			: filteredExercises.filter(
-					exercise => exercise.bodypart === muscle
-			  );
+			: filteredExercises.filter(exercise => exercise.muscle === muscle);
 
 	return filteredExercises;
 };

@@ -11,7 +11,7 @@ const Main = styled.div`
 	height: calc(100% - 56px);
 `;
 
-const Workouts = () => (
+const WorkoutEditor = () => (
 	<MainLayout>
 		<Menu />
 		<Main>
@@ -21,4 +21,4 @@ const Workouts = () => (
 	</MainLayout>
 );
 
-export default Workouts;
+export default WorkoutEditor;

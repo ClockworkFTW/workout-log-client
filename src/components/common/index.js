@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Input = styled.input`
 	width: ${props => props.width};
@@ -30,9 +30,10 @@ export const Label = styled.label`
 `;
 
 export const Group = styled.div`
-	margin-bottom: ${props => props.margin || "20px"};
+	margin: ${props => props.margin || "0px 0px 20px 0px"};
 `;
 
+// Buttons
 export const Button = styled.button`
 	width: ${props => props.width};
 	padding: 5px 10px;
@@ -51,4 +52,50 @@ export const Button = styled.button`
 		border: 1px solid #677eea;
 		color: #ffffff;
 	}
+`;
+
+//Headers
+const sharedHeader = css`
+	margin-top: 5px;
+	margin-bottom: 10px;
+	font-weight: 700;
+	text-transform: capitalize;
+	color: #2d3748;
+`;
+
+export const Header1 = styled.h1`
+	${sharedHeader};
+	font-size: 36px;
+`;
+export const Header2 = styled.h2`
+	${sharedHeader};
+	font-size: 28px;
+`;
+export const Header3 = styled.h3`
+	${sharedHeader};
+	font-size: 20px;
+`;
+export const Header4 = styled.h4`
+	${sharedHeader};
+	font-size: 16px;
+`;
+export const Header5 = styled.h5`
+	${sharedHeader};
+	font-size: 14px;
+`;
+export const Header6 = styled.h6`
+	${sharedHeader};
+	font-size: 12px;
+`;
+
+// Tags
+export const Tag = styled.div`
+	display: inline-block;
+	padding: 5px;
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	border-radius: 5px;
+	background: #677eea;
+	color: #ffffff;
 `;

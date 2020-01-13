@@ -49,6 +49,7 @@ const Editor = ({
 					<Label htmlFor="name">name</Label>
 					<Input
 						id="name"
+						type="text"
 						width="200px"
 						value={exercise.name}
 						onChange={event =>
@@ -92,7 +93,7 @@ const Editor = ({
 				<Button onClick={handleSubmit}>
 					{exercise.isNew ? "create" : "update"}
 				</Button>
-				{!exercise.default && (
+				{!exercise.isNew && (
 					<Button onClick={handleDelete}>delete</Button>
 				)}
 				<Button onClick={clearExercise}>cancel</Button>

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { editExercise } from "../../reducers/exercise-editor";
-import Button from "../common/Button";
+import { Header3, Button, Tag } from "../common";
 
 const Container = styled.div`
 	position: relative;
@@ -23,23 +23,7 @@ const Category = styled.h3`
 	font-size: 14px;
 	color: #a0aec0;
 `;
-const Name = styled.h1`
-	margin: 5px 0px 10px 0px;
-	font-size: 20px;
-	font-weight: 700;
-	text-transform: capitalize;
-	color: #2d3748;
-`;
-const Bodypart = styled.h3`
-	display: inline-block;
-	padding: 5px;
-	font-size: 12px;
-	font-weight: 700;
-	text-transform: uppercase;
-	border-radius: 5px;
-	background: #677eea;
-	color: #ffffff;
-`;
+
 const Buttons = styled.div`
 	position: absolute;
 	bottom: 20px;
@@ -54,25 +38,16 @@ const Card = ({ exercise, editExercise }) => {
 		<Container>
 			<Content>
 				<Category>{exercise.type}</Category>
-				<Name>{exercise.name}</Name>
-				<Bodypart>{exercise.muscle}</Bodypart>
+				<Header3>{exercise.name}</Header3>
+				<Tag>{exercise.muscle}</Tag>
 			</Content>
 			<Buttons>
 				<Link to={`/exercise-list/${exercise._id}`}>
-					<Button
-						icon={["fas", "expand"]}
-						text="view"
-						width="70px"
-						render={true}
-					/>
+					<Button>view</Button>
 				</Link>
-				<Button
-					icon={["fas", "edit"]}
-					text="edit"
-					width="70px"
-					render={!exercise.default}
-					onClick={() => editExercise(exercise)}
-				/>
+				{!exercise.default && (
+					<Button onClick={() => editExercise(exercise)}>edit</Button>
+				)}
 			</Buttons>
 		</Container>
 	);

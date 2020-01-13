@@ -7,7 +7,10 @@ import { initWorkout, reorderExercise } from "../../../reducers/workout-editor";
 import Item from "./Item";
 
 const Container = styled.div`
+	width: 100%;
 	height: 100%;
+	padding-right: 20px;
+	overflow: scroll;
 `;
 
 const Editor = ({ initWorkout, exercises, reorderExercise }) => {
@@ -30,7 +33,7 @@ const Editor = ({ initWorkout, exercises, reorderExercise }) => {
 					>
 						{exercises.map((exercise, index) => (
 							<Item
-								key={exercise._id}
+								key={exercise.dragId}
 								exercise={exercise}
 								index={index}
 							/>

@@ -5,11 +5,17 @@ import { Link, Redirect } from "react-router-dom";
 
 import { userSignIn } from "../reducers/user";
 
-import InputGroup from "./common/InputGroup";
+import { Group, Label, Input, Button } from "./common";
 
+const Wrapper = styled.div`
+	height: calc(100vh - 45px);
+	padding: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
 const Container = styled.div``;
 const Form = styled.form``;
-const Button = styled.button``;
 const Prompt = styled.p``;
 
 const SignIn = ({ user, userSignIn }) => {
@@ -24,28 +30,34 @@ const SignIn = ({ user, userSignIn }) => {
 	return user ? (
 		<Redirect to="/dashboard" />
 	) : (
-		<Container>
-			<Form onSubmit={handleSubmit}>
-				<InputGroup
-					id="username"
-					label="username"
-					type="text"
-					value={username}
-					setValue={setUsername}
-				/>
-				<InputGroup
-					id="password"
-					label="password"
-					type="password"
-					value={password}
-					setValue={setPassword}
-				/>
-				<Button type="submit">sign in</Button>
-			</Form>
-			<Prompt>
-				Don't have an account? <Link to="/sign-up">Sign up</Link>
-			</Prompt>
-		</Container>
+		<Wrapper>
+			<Container>
+				<Form onSubmit={handleSubmit}>
+					<Group>
+						<Label htmlFor="username">username</Label>
+						<Input
+							id="username"
+							type="text"
+							value={username}
+							onChange={event => setUsername(event.target.value)}
+						></Input>
+					</Group>
+					<Group>
+						<Label htmlFor="password">password</Label>
+						<Input
+							id="password"
+							type="password"
+							value={password}
+							onChange={event => setPassword(event.target.value)}
+						></Input>
+					</Group>
+					<Button type="submit">sign in</Button>
+				</Form>
+				<Prompt>
+					Don't have an account? <Link to="/sign-up">Sign up</Link>
+				</Prompt>
+			</Container>
+		</Wrapper>
 	);
 };
 
