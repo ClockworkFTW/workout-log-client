@@ -88,6 +88,13 @@ export const Header6 = styled.h6`
 	font-size: 12px;
 `;
 
+// Metadata
+export const Metadata = styled.span`
+	text-transform: capitalize;
+	font-size: 14px;
+	color: #a0aec0;
+`;
+
 // Tags
 export const Tag = styled.div`
 	display: inline-block;

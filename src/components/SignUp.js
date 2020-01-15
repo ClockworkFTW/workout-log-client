@@ -4,12 +4,10 @@ import styled from "styled-components";
 import { Link, Redirect } from "react-router-dom";
 
 import { userSignUp } from "../reducers/user";
-
-import InputGroup from "./common/InputGroup";
+import { Group, Label, Input, Button } from "./common";
 
 const Container = styled.div``;
 const Form = styled.form``;
-const Button = styled.button``;
 const Prompt = styled.p``;
 
 const SignUp = ({ user, userSignUp }) => {
@@ -28,34 +26,42 @@ const SignUp = ({ user, userSignUp }) => {
 	) : (
 		<Container>
 			<Form onSubmit={handleSubmit}>
-				<InputGroup
-					id="username"
-					label="username"
-					type="text"
-					value={username}
-					setValue={setUsername}
-				/>
-				<InputGroup
-					id="email"
-					label="email"
-					type="email"
-					value={email}
-					setValue={setEmail}
-				/>
-				<InputGroup
-					id="password-one"
-					label="password"
-					type="password"
-					value={passwordOne}
-					setValue={setPasswordOne}
-				/>
-				<InputGroup
-					id="password-two"
-					label="confirm password"
-					type="password"
-					value={passwordTwo}
-					setValue={setPasswordTwo}
-				/>
+				<Group>
+					<Label htmlFor="username">username</Label>
+					<Input
+						id="username"
+						type="text"
+						value={username}
+						onChange={event => setUsername(event.target.value)}
+					/>
+				</Group>
+				<Group>
+					<Label htmlFor="email">email</Label>
+					<Input
+						id="email"
+						type="email"
+						value={email}
+						onChange={event => setEmail(event.target.value)}
+					/>
+				</Group>
+				<Group>
+					<Label htmlFor="password-one">password</Label>
+					<Input
+						id="password-one"
+						type="password"
+						value={passwordOne}
+						onChange={event => setPasswordOne(event.target.value)}
+					/>
+				</Group>
+				<Group>
+					<Label htmlFor="password-two">confirm password</Label>
+					<Input
+						id="password-two"
+						type="password"
+						value={passwordTwo}
+						onChange={event => setPasswordTwo(event.target.value)}
+					/>
+				</Group>
 				<Button type="submit">sign up</Button>
 			</Form>
 			<Prompt>

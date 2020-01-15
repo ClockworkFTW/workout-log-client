@@ -9,7 +9,7 @@ export const type = [
 	"other"
 ];
 
-export const setType = ["warmup", "normal", "drop", "AMRAP"];
+export const setType = ["normal", "warm up", "drop set", "failure"];
 
 export const muscle = [
 	"quadriceps",

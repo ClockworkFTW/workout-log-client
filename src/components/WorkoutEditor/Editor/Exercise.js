@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 
-import Set from "./Set";
+import SetTable from "./SetTable";
 import { removeExercise, addSet } from "../../../reducers/workout-editor";
-import { Header3, Button } from "../../common";
+import { Header3, Metadata, Button } from "../../common";
 
 const Container = styled.div`
 	position: relative;
@@ -16,6 +16,8 @@ const Container = styled.div`
 	border: 1px solid #e2e8f0;
 `;
 
+const Info = styled.div``;
+
 const Exercise = ({ exercise, removeExercise, addSet, index }) => (
 	<Draggable draggableId={exercise.dragId} index={index}>
 		{(provided, snapshot) => (
@@ -24,18 +26,14 @@ const Exercise = ({ exercise, removeExercise, addSet, index }) => (
 				{...provided.draggableProps}
 				{...provided.dragHandleProps}
 			>
-				<Header3>
-					{index + 1}. {exercise.name}
-				</Header3>
-				{exercise.sets.map((set, index) => (
-					<Set
-						key={index}
-						id={exercise.dragId}
-						index={index}
-						set={set}
-					/>
-				))}
-				<Button onClick={() => addSet(exercise.dragId)}>add set</Button>
+				<Info>
+					<Metadata>{exercise.type}</Metadata>
+					<Header3>{exercise.name}</Header3>
+				</Info>
+				<SetTable exercise={exercise} />
+				<Button width="100%" onClick={() => addSet(exercise.dragId)}>
+					add set
+				</Button>
 				<Button
 					onClick={() => removeExercise(exercise.dragId)}
 					style={{ position: "absolute", top: "20px", right: "20px" }}

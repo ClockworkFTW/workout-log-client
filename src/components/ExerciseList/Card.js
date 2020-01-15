@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { editExercise } from "../../reducers/exercise-editor";
-import { Header3, Button, Tag } from "../common";
+import { Header3, Button, Tag, Metadata } from "../common";
 
 const Container = styled.div`
 	position: relative;
@@ -17,12 +17,8 @@ const Container = styled.div`
 	border-radius: 5px;
 	border: 1px solid #e2e8f0;
 `;
+
 const Content = styled.div``;
-const Category = styled.h3`
-	text-transform: capitalize;
-	font-size: 14px;
-	color: #a0aec0;
-`;
 
 const Buttons = styled.div`
 	position: absolute;
@@ -37,7 +33,7 @@ const Card = ({ exercise, editExercise }) => {
 	return (
 		<Container>
 			<Content>
-				<Category>{exercise.type}</Category>
+				<Metadata>{exercise.type}</Metadata>
 				<Header3>{exercise.name}</Header3>
 				<Tag>{exercise.muscle}</Tag>
 			</Content>
