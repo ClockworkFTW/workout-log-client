@@ -65,8 +65,28 @@ const SVG = styled(AnatomySVG)`
 	}
 `;
 
-const Anatomy = ({ active, width, flex }) => (
-	<SVG active={active} width={width} flex={flex} />
+const setViewbox = active => {
+	switch (active) {
+		case "chest":
+			return "52 80 200 120";
+		case "deltoids":
+			return "52 80 200 120";
+		case "biceps":
+			return "52 130 200 120";
+		case "abs":
+			return "40 160 230 140";
+		default:
+			return "0 0 595.28 595.28";
+	}
+};
+
+const Anatomy = ({ active, focused, width, flex }) => (
+	<SVG
+		active={active}
+		viewBox={focused ? setViewbox(active) : "0 0 595.28 595.28"}
+		width={width}
+		flex={flex}
+	/>
 );
 
 export default Anatomy;

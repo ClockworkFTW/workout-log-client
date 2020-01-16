@@ -36,7 +36,7 @@ const Sidebar = () => (
 				<Icon icon={["fas", "dumbbell"]} />
 				exercises
 			</Link>
-			<Link to="/workout-editor">
+			<Link to="/workout-list">
 				<Icon icon={["fas", "clipboard"]} />
 				workouts
 			</Link>

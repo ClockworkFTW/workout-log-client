@@ -13,7 +13,7 @@ const ExerciseList = ({ isEditing, initExercise }) => {
 		initExercise();
 	}, []);
 
-	// If an exercise is being edited redirect to the editor otherwise render the list
+	// If am exercise was being edited, redirect to the editor, otherwise render the list
 	return isEditing ? (
 		<Redirect to="/exercise-editor" />
 	) : (

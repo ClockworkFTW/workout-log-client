@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { addExercise } from "../../../reducers/workout-editor";
 import { Header4, Metadata } from "../../common";
-import AnatomyFocused from "../../common/AnatomyFocused";
+import Anatomy from "../../common/Anatomy";
 
 const Container = styled.div`
 	display: flex;
@@ -24,10 +24,6 @@ const Container = styled.div`
 const Image = styled.div`
 	position: relative;
 	flex: 0 0 100px;
-	background: linear-gradient(
-		rgba(255, 255, 255, 0) 0%,
-		rgba(255, 255, 255, 1) 100%
-	);
 `;
 
 const Overlay = styled.div`
@@ -38,8 +34,8 @@ const Overlay = styled.div`
 	left: 0px;
 	background: linear-gradient(
 		rgba(255, 255, 255, 1) 0%,
-		rgba(255, 255, 255, 0) 30%,
-		rgba(255, 255, 255, 0) 70%,
+		rgba(255, 255, 255, 0) 20%,
+		rgba(255, 255, 255, 0) 80%,
 		rgba(255, 255, 255, 1) 100%
 	);
 `;
@@ -52,7 +48,7 @@ const Exercise = ({ exercise, addExercise }) => (
 	<Container onClick={() => addExercise(exercise)}>
 		<Image>
 			<Overlay />
-			<AnatomyFocused active={exercise.muscle} width="100%" />
+			<Anatomy active={exercise.muscle} focused={true} width="100%" />
 		</Image>
 		<Content>
 			<Metadata>{exercise.type}</Metadata>

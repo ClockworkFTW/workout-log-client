@@ -1,5 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
+import { Redirect } from "react-router-dom";
 
 import MainLayout from "../common/MainLayout";
 import Menu from "./Menu";
@@ -8,17 +10,22 @@ import Editor from "./Editor";
 
 const Main = styled.div`
 	display: flex;
-	height: calc(100% - 56px);
+	height: calc(100% - 67px);
 `;
 
-const WorkoutEditor = () => (
-	<MainLayout>
-		<Menu />
-		<Main>
-			<Picker />
-			<Editor />
-		</Main>
-	</MainLayout>
-);
+const WorkoutEditor = ({ workout }) =>
+	workout ? (
+		<MainLayout>
+			<Menu />
+			<Main>
+				<Picker />
+				<Editor workout={workout} />
+			</Main>
+		</MainLayout>
+	) : (
+		<Redirect to="/workout-list" />
+	);
 
-export default WorkoutEditor;
+const mapStateToProps = state => ({ workout: state.workoutEditor });
+
+export default connect(mapStateToProps)(WorkoutEditor);

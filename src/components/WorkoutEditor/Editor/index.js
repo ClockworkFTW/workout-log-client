@@ -1,50 +1,43 @@
-import React, { useEffect, useCallback } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
-import { initWorkout, reorderExercise } from "../../../reducers/workout-editor";
-import Exercise from "./Exercise";
+import { createWorkout } from "../../../reducers/workout-list";
+import { clearWorkout } from "../../../reducers/workout-editor";
+import { Button } from "../../common";
+import Details from "./Details";
+import ExerciseList from "./ExerciseList";
 
 const Container = styled.div`
 	width: 100%;
 	height: 100%;
-	padding-right: 20px;
+	padding: 0px 20px 20px 0px;
 	overflow: scroll;
 `;
 
-const Editor = ({ initWorkout, exercises, reorderExercise }) => {
-	useEffect(() => {
-		initWorkout();
-	}, []);
-
-	const onDragEnd = useCallback(result => reorderExercise(result), []);
+const Editor = ({ token, workout, createWorkout, clearWorkout }) => {
+	const handleCreate = () => {
+		const exercises = workout.exercises.map(exercise => ({
+			exercise: exercise._id,
+			sets: exercise.sets
+		}));
+		createWorkout(token, { ...workout, exercises });
+		clearWorkout();
+	};
 
 	return (
-		<DragDropContext onDragEnd={onDragEnd}>
-			<Droppable droppableId="workout-editor">
-				{(provided, snapshot) => (
-					<Container
-						ref={provided.innerRef}
-						{...provided.droppableProps}
-					>
-						{exercises.map((exercise, index) => (
-							<Exercise
-								key={exercise.dragId}
-								exercise={exercise}
-								index={index}
-							/>
-						))}
-						{provided.placeholder}
-					</Container>
-				)}
-			</Droppable>
-		</DragDropContext>
+		<Container>
+			<Details workout={workout} />
+			<ExerciseList exercises={workout.exercises} />
+			<Button width="100%" onClick={handleCreate}>
+				create
+			</Button>
+		</Container>
 	);
 };
 
-const mapStateToProps = state => ({ exercises: state.workoutEditor });
+const mapStateToProps = state => ({ token: state.user.data.token });
 
-export default connect(mapStateToProps, { initWorkout, reorderExercise })(
+export default connect(mapStateToProps, { createWorkout, clearWorkout })(
 	Editor
 );
