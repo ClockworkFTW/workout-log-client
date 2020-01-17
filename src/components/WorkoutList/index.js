@@ -4,12 +4,13 @@ import styled from "styled-components";
 import { Redirect } from "react-router-dom";
 
 import MainLayout from "../common/MainLayout";
-import { Button } from "../common";
-import { initWorkout, newWorkout } from "../../reducers/workout-editor";
+import Menu from "./Menu";
+import Library from "./Library";
+import { initWorkout } from "../../reducers/workout-editor";
 
 const Container = styled.div``;
 
-const WorkoutList = ({ initWorkout, newWorkout, isEditing }) => {
+const WorkoutList = ({ initWorkout, isEditing }) => {
 	// Check local storage to see if a workout was being edited
 	useEffect(() => {
 		initWorkout();
@@ -21,8 +22,8 @@ const WorkoutList = ({ initWorkout, newWorkout, isEditing }) => {
 	) : (
 		<Container>
 			<MainLayout>
-				<h1>Workout List</h1>
-				<Button onClick={newWorkout}>new</Button>
+				<Menu />
+				<Library />
 			</MainLayout>
 		</Container>
 	);
@@ -30,6 +31,4 @@ const WorkoutList = ({ initWorkout, newWorkout, isEditing }) => {
 
 const mapStateToProps = state => ({ isEditing: state.workoutEditor });
 
-export default connect(mapStateToProps, { initWorkout, newWorkout })(
-	WorkoutList
-);
+export default connect(mapStateToProps, { initWorkout })(WorkoutList);

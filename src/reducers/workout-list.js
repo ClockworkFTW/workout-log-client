@@ -11,6 +11,8 @@ const requestSuccess = (type, data) => ({
 });
 const requestError = error => ({ type: WORKOUT_LIST_REQUEST_ERROR, error });
 
+const sleep = () => new Promise(r => setTimeout(r, 5000));
+
 export const fetchWorkouts = token => {
 	return async dispatch => {
 		dispatch(requestPending());
@@ -19,6 +21,8 @@ export const fetchWorkouts = token => {
 			dispatch(requestSuccess("fetch", workouts));
 		} catch (error) {
 			dispatch(requestError(error));
+			await sleep();
+			dispatch(requestError(null));
 		}
 	};
 };
@@ -31,6 +35,8 @@ export const createWorkout = (token, workout) => {
 			dispatch(requestSuccess("create", newWorkout));
 		} catch (error) {
 			dispatch(requestError(error));
+			await sleep();
+			dispatch(requestError(null));
 		}
 	};
 };
@@ -43,6 +49,8 @@ export const updateWorkout = (token, workout) => {
 			dispatch(requestSuccess("update", updatedWorkout));
 		} catch (error) {
 			dispatch(requestError(error));
+			await sleep();
+			dispatch(requestError(null));
 		}
 	};
 };
@@ -55,6 +63,8 @@ export const deleteWorkout = (token, id) => {
 			dispatch(requestSuccess("delete", id));
 		} catch (error) {
 			dispatch(requestError(error));
+			await sleep();
+			dispatch(requestError(null));
 		}
 	};
 };

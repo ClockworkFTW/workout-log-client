@@ -26,7 +26,7 @@ const App = ({ userInit }) => {
 
 	return (
 		<Router>
-			<Header title="Gainz" />
+			<Header title="Strong 2.0" />
 			<Switch>
 				<Route path="/" exact>
 					<Landing />

@@ -68,11 +68,29 @@ export const removeSet = (id, index) => ({
 	edit: { id, index }
 });
 
+// CONSTRUCTORS
+const newSet = {
+	reps: 0,
+	weight: 0,
+	rest: 0,
+	setType: "normal"
+};
+
+const constructWorkout = workout =>
+	workout
+		? {
+				...workout,
+				exercises: workout.exercises.map(exercise => ({
+					dragId: uniqid(),
+					...exercise
+				})),
+				isNew: false
+		  }
+		: { name: "", description: "", exercises: [], isNew: true };
+
 // REDUCER
 const workoutEditorReducer = (state = null, action) => {
 	let newState;
-	let exercises;
-
 	switch (action.type) {
 		// Set workout editor state to cache
 		case WORKOUT_EDITOR_INIT_WORKOUT:
@@ -103,78 +121,65 @@ const workoutEditorReducer = (state = null, action) => {
 		case WORKOUT_EDITOR_ADD_EXERCISE:
 			const exercise = {
 				dragId: uniqid(),
-				...action.exercise,
+				exercise: action.exercise,
 				sets: [newSet]
 			};
-			exercises = [...state.exercises, exercise];
-			newState = { ...state, exercises };
+			newState = { ...state, exercises: [...state.exercises, exercise] };
 			setWorkoutCache(newState);
 			return newState;
 
 		// Update the editor's exercise order after a drag event
 		case WORKOUT_EDITOR_REORDER_EXERCISE:
-			exercises = handleReorder(state.exercises, action.result);
-			newState = { ...state, exercises };
+			newState = {
+				...state,
+				exercises: handleReorder(state.exercises, action.result)
+			};
 			setWorkoutCache(newState);
 			return newState;
 
 		// Remove an exercise from the editor
 		case WORKOUT_EDITOR_REMOVE_EXERCISE:
-			exercises = state.exercises.filter(
-				exercise => exercise.dragId !== action.id
-			);
-			newState = { ...state, exercises };
+			newState = {
+				...state,
+				exercises: handleRemove(state.exercises, action.id)
+			};
 			setWorkoutCache(newState);
 			return newState;
 
 		// Add a set to an exercise
 		case WORKOUT_EDITOR_ADD_SET:
-			exercises = state.exercises.map(exercise =>
-				exercise.dragId === action.id
-					? {
-							...exercise,
-							sets: [...exercise.sets, newSet]
-					  }
-					: exercise
-			);
-			newState = { ...state, exercises };
-			setWorkoutCache(newState);
-			return newState;
-
-		// Modify a set on an exercise
-		case WORKOUT_EDITOR_MODIFY_SET:
-			exercises = state.exercises.map(exercise =>
-				exercise.dragId === action.edit.id
-					? {
-							...exercise,
-							sets: exercise.sets.map((set, index) =>
-								index === action.edit.index
-									? {
-											...set,
-											[action.edit.prop]: action.edit.val
-									  }
-									: set
-							)
-					  }
-					: exercise
-			);
-			newState = { ...state, exercises };
+			newState = {
+				...state,
+				exercises: handleAddSet(state.exercises, action.id)
+			};
 			setWorkoutCache(newState);
 			return newState;
 
 		// Remove a set from an exercise
+		case WORKOUT_EDITOR_MODIFY_SET:
+			newState = {
+				...state,
+				exercises: handleModifySet(
+					state.exercises,
+					action.edit.id,
+					action.edit.index,
+					action.edit.prop,
+					action.edit.val
+				)
+			};
+			setWorkoutCache(newState);
+			return newState;
+
+		// Modify a set on an exercise
 		case WORKOUT_EDITOR_REMOVE_SET:
-			exercises = state.exercises.map(exercise =>
-				exercise.dragId === action.edit.id
-					? {
-							...exercise,
-							sets: exercise.sets.filter(
-								(set, index) => index !== action.edit.index
-							)
-					  }
-					: exercise
-			);
-			newState = { ...state, exercises };
+			newState = {
+				...state,
+				exercises: handleRemoveSet(
+					state.exercises,
+					action.edit.id,
+					action.edit.index
+				)
+			};
 			setWorkoutCache(newState);
 			return newState;
 
@@ -187,21 +192,7 @@ const workoutEditorReducer = (state = null, action) => {
 	}
 };
 
-// New set object
-const newSet = {
-	reps: 0,
-	weight: 0,
-	rest: 0,
-	setType: "normal"
-};
-
-// Construct workout object
-const constructWorkout = workout =>
-	workout
-		? { ...workout, isNew: false }
-		: { name: "", description: "", exercises: [], isNew: true };
-
-// Handle workout editor exercise reordering
+// HANDLERS
 const handleReorder = (exercises, result) => {
 	// TODO: handle drop outside droppable
 	const { draggableId, source, destination } = result;
@@ -210,6 +201,46 @@ const handleReorder = (exercises, result) => {
 	exercises.splice(destination.index, 0, target);
 	return exercises;
 };
+
+const handleRemove = (exercises, id) =>
+	exercises.filter(exercise => exercise.dragId !== id);
+
+const handleAddSet = (exercises, id) =>
+	exercises.map(exercise =>
+		exercise.dragId === id
+			? {
+					...exercise,
+					sets: [...exercise.sets, newSet]
+			  }
+			: exercise
+	);
+
+const handleModifySet = (exercises, id, index, prop, val) =>
+	exercises.map(exercise =>
+		exercise.dragId === id
+			? {
+					...exercise,
+					sets: exercise.sets.map((set, i) =>
+						i === index
+							? {
+									...set,
+									[prop]: val
+							  }
+							: set
+					)
+			  }
+			: exercise
+	);
+
+const handleRemoveSet = (exercises, id, index) =>
+	exercises.map(exercise =>
+		exercise.dragId === id
+			? {
+					...exercise,
+					sets: exercise.sets.filter((set, i) => i !== index)
+			  }
+			: exercise
+	);
 
 // Save the workout editor state to local storage
 const setWorkoutCache = state =>

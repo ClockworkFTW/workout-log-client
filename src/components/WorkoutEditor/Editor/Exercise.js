@@ -27,8 +27,8 @@ const Exercise = ({ exercise, removeExercise, addSet, index }) => (
 				{...provided.dragHandleProps}
 			>
 				<Info>
-					<Metadata>{exercise.type}</Metadata>
-					<Header3>{exercise.name}</Header3>
+					<Metadata>{exercise.exercise.type}</Metadata>
+					<Header3>{exercise.exercise.name}</Header3>
 				</Info>
 				<SetTable exercise={exercise} />
 				<Button width="100%" onClick={() => addSet(exercise.dragId)}>

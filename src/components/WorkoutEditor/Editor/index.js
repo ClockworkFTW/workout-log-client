@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { createWorkout } from "../../../reducers/workout-list";
+import { createWorkout, updateWorkout } from "../../../reducers/workout-list";
 import { clearWorkout } from "../../../reducers/workout-editor";
 import { Button } from "../../common";
 import Details from "./Details";
@@ -15,13 +15,25 @@ const Container = styled.div`
 	overflow: scroll;
 `;
 
-const Editor = ({ token, workout, createWorkout, clearWorkout }) => {
+const Editor = ({
+	token,
+	workout,
+	createWorkout,
+	updateWorkout,
+	clearWorkout
+}) => {
 	const handleCreate = () => {
 		const exercises = workout.exercises.map(exercise => ({
-			exercise: exercise._id,
+			exercise: exercise.exercise._id,
 			sets: exercise.sets
 		}));
-		createWorkout(token, { ...workout, exercises });
+
+		const workoutObject = { ...workout, exercises };
+
+		workout.isNew
+			? createWorkout(token, workoutObject)
+			: updateWorkout(token, workoutObject);
+
 		clearWorkout();
 	};
 
@@ -30,7 +42,7 @@ const Editor = ({ token, workout, createWorkout, clearWorkout }) => {
 			<Details workout={workout} />
 			<ExerciseList exercises={workout.exercises} />
 			<Button width="100%" onClick={handleCreate}>
-				create
+				{workout.isNew ? "create" : "update"}
 			</Button>
 		</Container>
 	);
@@ -38,6 +50,8 @@ const Editor = ({ token, workout, createWorkout, clearWorkout }) => {
 
 const mapStateToProps = state => ({ token: state.user.data.token });
 
-export default connect(mapStateToProps, { createWorkout, clearWorkout })(
-	Editor
-);
+export default connect(mapStateToProps, {
+	createWorkout,
+	updateWorkout,
+	clearWorkout
+})(Editor);
