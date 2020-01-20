@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { editExercise } from "../../reducers/exercise-editor";
-import { Header3, Button, Tag, Metadata } from "../common";
+import { Header3, ButtonPrimary, Tag, Metadata } from "../common";
 
 const Container = styled.div`
 	position: relative;
@@ -39,10 +39,12 @@ const Card = ({ exercise, editExercise }) => {
 			</Content>
 			<Buttons>
 				<Link to={`/exercise-list/${exercise._id}`}>
-					<Button>view</Button>
+					<ButtonPrimary>view</ButtonPrimary>
 				</Link>
 				{!exercise.default && (
-					<Button onClick={() => editExercise(exercise)}>edit</Button>
+					<ButtonPrimary onClick={() => editExercise(exercise)}>
+						edit
+					</ButtonPrimary>
 				)}
 			</Buttons>
 		</Container>

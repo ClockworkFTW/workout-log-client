@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { editWorkout } from "../../reducers/workout-editor";
-import { Header3, Tag, Button } from "../common";
+import { Header3, Tag, ButtonPrimary } from "../common";
 
 const Container = styled.div`
 	position: relative;
@@ -17,18 +17,34 @@ const Container = styled.div`
 	border: 1px solid #e2e8f0;
 `;
 
-const muscles = exercises =>
-	exercises.map(exercise => exercise.exercise.muscle);
+const Buttons = styled.div`
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	right: 20px;
+	display: flex;
+	justify-content: space-between;
+`;
+
+const getMuscles = exercises => {
+	const muscles = exercises.map(exercise => exercise.exercise.muscle);
+	return [...new Set(muscles)];
+};
 
 const Card = ({ workout, editWorkout }) => (
 	<Container>
 		<Header3>{workout.name}</Header3>
-		{muscles(workout.exercises).map((muscle, index) => (
+		{getMuscles(workout.exercises).map((muscle, index) => (
 			<Tag key={index} style={{ margin: "0px 10px 10px 0px" }}>
 				{muscle}
 			</Tag>
 		))}
-		<Button onClick={() => editWorkout(workout)}>edit</Button>
+		<Buttons>
+			<ButtonPrimary>start</ButtonPrimary>
+			<ButtonPrimary onClick={() => editWorkout(workout)}>
+				edit
+			</ButtonPrimary>
+		</Buttons>
 	</Container>
 );
 

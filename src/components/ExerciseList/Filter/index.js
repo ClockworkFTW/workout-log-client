@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { clearExerciseFilter } from "../../../reducers/exercise-filter";
-import { Button } from "../../common";
+import { ButtonPrimary } from "../../common";
 import Name from "./Name";
 import Type from "./Type";
 import Muscle from "./Muscle";
@@ -17,7 +17,7 @@ const Filter = ({ clearExerciseFilter }) => (
 		<Name />
 		<Type />
 		<Muscle />
-		<Button onClick={clearExerciseFilter}>clear</Button>
+		<ButtonPrimary onClick={clearExerciseFilter}>clear</ButtonPrimary>
 	</Container>
 );
 

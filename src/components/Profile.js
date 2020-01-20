@@ -7,10 +7,10 @@ const Container = styled.div`
 	padding: 20px;
 `;
 
-const Dashboard = () => (
+const Profile = () => (
 	<MainLayout>
 		<Container></Container>
 	</MainLayout>
 );
 
-export default Dashboard;
+export default Profile;

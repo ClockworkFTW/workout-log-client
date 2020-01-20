@@ -9,8 +9,8 @@ import Picker from "./Picker";
 import Editor from "./Editor";
 
 const Main = styled.div`
+	height: 100%;
 	display: flex;
-	height: calc(100% - 67px);
 `;
 
 const WorkoutEditor = ({ workout }) =>

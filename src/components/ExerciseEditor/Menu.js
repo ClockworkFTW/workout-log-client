@@ -2,20 +2,19 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import Filter from "./Filter";
 import { ButtonPrimary } from "../common";
-import { newExercise } from "../../reducers/exercise-editor";
+import { clearExercise } from "../../reducers/exercise-editor";
 
 const Container = styled.div`
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 `;
 
-const Menu = ({ newExercise }) => (
+const Menu = ({ clearExercise }) => (
 	<Container>
-		<Filter />
-		<ButtonPrimary onClick={newExercise}>new</ButtonPrimary>
+		<ButtonPrimary onClick={clearExercise}>cancel</ButtonPrimary>
 	</Container>
 );
 
-export default connect(null, { newExercise })(Menu);
+export default connect(null, { clearExercise })(Menu);

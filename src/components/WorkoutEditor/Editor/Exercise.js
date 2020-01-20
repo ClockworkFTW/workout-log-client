@@ -5,7 +5,7 @@ import { Draggable } from "react-beautiful-dnd";
 
 import SetTable from "./SetTable";
 import { removeExercise, addSet } from "../../../reducers/workout-editor";
-import { Header3, Metadata, Button } from "../../common";
+import { Header3, Metadata, ButtonPrimary } from "../../common";
 
 const Container = styled.div`
 	position: relative;
@@ -31,15 +31,18 @@ const Exercise = ({ exercise, removeExercise, addSet, index }) => (
 					<Header3>{exercise.exercise.name}</Header3>
 				</Info>
 				<SetTable exercise={exercise} />
-				<Button width="100%" onClick={() => addSet(exercise.dragId)}>
+				<ButtonPrimary
+					width="100%"
+					onClick={() => addSet(exercise.dragId)}
+				>
 					add set
-				</Button>
-				<Button
+				</ButtonPrimary>
+				<ButtonPrimary
 					onClick={() => removeExercise(exercise.dragId)}
 					style={{ position: "absolute", top: "20px", right: "20px" }}
 				>
 					remove
-				</Button>
+				</ButtonPrimary>
 			</Container>
 		)}
 	</Draggable>

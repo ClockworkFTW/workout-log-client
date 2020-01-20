@@ -7,12 +7,10 @@ const Container = styled.div`
 	padding: 20px;
 `;
 
-const Schedule = () => (
+const Measure = () => (
 	<MainLayout>
-		<Container>
-			<h1>Schedule</h1>
-		</Container>
+		<Container></Container>
 	</MainLayout>
 );
 
-export default Schedule;
+export default Measure;

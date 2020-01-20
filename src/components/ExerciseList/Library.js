@@ -6,8 +6,8 @@ import Card from "./Card";
 import { fetchExercises } from "../../reducers/exercise-list";
 
 const Container = styled.div`
-	height: calc(100% - 70px);
-	padding: 0px 10px;
+	height: 100%;
+	padding: 20px 10px 0px 10px;
 	overflow: scroll;
 `;
 

@@ -2,19 +2,17 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { Button } from "../common";
+import { ButtonPrimary } from "../common";
 import { clearWorkout } from "../../reducers/workout-editor";
 
 const Container = styled.div`
 	display: flex;
 	justify-content: space-between;
-	padding: 20px;
 `;
 
 const Menu = ({ clearWorkout }) => (
 	<Container>
-		<h1>Menu</h1>
-		<Button onClick={clearWorkout}>clear</Button>
+		<ButtonPrimary onClick={clearWorkout}>cancel</ButtonPrimary>
 	</Container>
 );
 

@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Group = styled.div`
 	margin: ${props => props.margin || "0px 0px 20px 0px"};
@@ -54,23 +55,40 @@ export const TextArea = styled.textarea`
 `;
 
 // Buttons
-export const Button = styled.button`
+
+const sharedButton = css`
 	width: ${props => props.width};
 	padding: 5px 10px;
 	font-family: inherit;
 	text-transform: uppercase;
 	font-size: 12px;
-	color: #2d3748;
-	border: 1px solid #e2e8f0;
 	border-radius: 5px;
-	background: #ffffff;
 	outline: none;
 	transition: all ease-in-out 0.1s;
+`;
+
+export const ButtonPrimary = styled.button`
+	${sharedButton}
+	color: #2d3748;
+	border: 1px solid #e2e8f0;
+	background: #ffffff;
 	&:hover {
 		cursor: pointer;
 		background: #677eea;
 		border: 1px solid #677eea;
 		color: #ffffff;
+	}
+`;
+
+export const ButtonAction = styled.button`
+	${sharedButton}
+	color: #ffffff;
+	border: 1px solid #677eea;
+	background: #677eea;
+	&:hover {
+		cursor: pointer;
+		background: #ffffff;
+		color: #677eea;
 	}
 `;
 
@@ -106,6 +124,26 @@ export const Header5 = styled.h5`
 export const Header6 = styled.h6`
 	${sharedHeader};
 	font-size: 12px;
+`;
+
+// Paragraph
+export const Paragraph = styled.p`
+	margin-bottom: 20px;
+	font-size: 14px;
+	color: #718196;
+`;
+
+// Links
+export const RouterLink = styled(Link)`
+	text-decoration: none;
+	font-weight: 700;
+	color: #687eea;
+`;
+
+export const AnchorLink = styled.a`
+	text-decoration: none;
+	font-weight: 700;
+	color: #687eea;
 `;
 
 // Metadata

@@ -8,7 +8,7 @@ import ErrorMessage from "./ErrorMessage";
 
 const Container = styled.div`
 	height: calc(100% - 75px);
-	padding: 0px 10px 20px 10px;
+	padding: 20px 10px 20px 10px;
 	overflow: scroll;
 `;
 

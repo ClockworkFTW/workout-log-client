@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { setType } from "../../../config";
 import { modifySet, removeSet } from "../../../reducers/workout-editor";
 import SelectInput from "../../common/SelectInput";
-import { Input, Button } from "../../common";
+import { Input, ButtonPrimary } from "../../common";
 
 const Container = styled.tr`
 	margin: 15px 0px;
@@ -69,7 +69,9 @@ const SetRow = ({ id, index, set, modifySet, removeSet }) => (
 			/>
 		</Td>
 		<Td align="right">
-			<Button onClick={() => removeSet(id, index)}>remove</Button>
+			<ButtonPrimary onClick={() => removeSet(id, index)}>
+				remove
+			</ButtonPrimary>
 		</Td>
 	</Container>
 );

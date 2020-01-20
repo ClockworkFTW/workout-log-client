@@ -1,0 +1,30 @@
+import React from "react";
+import { connect } from "react-redux";
+import styled from "styled-components";
+
+import { toggleSidebar } from "../../reducers/sidebar";
+import Logo from "./Logo";
+import Profile from "./Profile";
+import Navigation from "./Navigation";
+import Toggle from "./Toggle";
+
+const Container = styled.div`
+	flex: ${props => (props.toggle ? "0 0 200px" : "0 0 auto")};
+	background: #2e3749;
+`;
+
+const Sidebar = ({ user, toggle, toggleSidebar }) => (
+	<Container toggle={toggle}>
+		<Logo />
+		<Profile user={user} toggle={toggle} />
+		<Navigation toggle={toggle} />
+		<Toggle toggle={toggle} toggleSidebar={toggleSidebar} />
+	</Container>
+);
+
+const mapStateToProps = state => ({
+	user: state.user.data,
+	toggle: state.sidebar
+});
+
+export default connect(mapStateToProps, { toggleSidebar })(Sidebar);

@@ -1,17 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
 import { useParams } from "react-router-dom";
 
-import { Header1 } from "../common";
-import Anatomy from "../common/Anatomy";
+import Menu from "./Menu";
+import View from "./View";
 import MainLayout from "../common/MainLayout";
-
-const Container = styled.div`
-	height: 100%;
-	padding: 20px;
-	overflow: scroll;
-`;
 
 const ExerciseView = ({ exercises }) => {
 	const { id } = useParams();
@@ -19,10 +12,8 @@ const ExerciseView = ({ exercises }) => {
 
 	return (
 		<MainLayout>
-			<Container>
-				<Header1>{exercise.name}</Header1>
-				<Anatomy active={exercise.muscle} />
-			</Container>
+			<Menu name={exercise.name} />
+			<View exercise={exercise} />
 		</MainLayout>
 	);
 };

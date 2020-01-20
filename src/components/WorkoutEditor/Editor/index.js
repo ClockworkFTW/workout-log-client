@@ -2,16 +2,20 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { createWorkout, updateWorkout } from "../../../reducers/workout-list";
+import {
+	createWorkout,
+	updateWorkout,
+	deleteWorkout
+} from "../../../reducers/workout-list";
 import { clearWorkout } from "../../../reducers/workout-editor";
-import { Button } from "../../common";
+import { ButtonAction } from "../../common";
 import Details from "./Details";
 import ExerciseList from "./ExerciseList";
 
 const Container = styled.div`
 	width: 100%;
 	height: 100%;
-	padding: 0px 20px 20px 0px;
+	padding: 20px 20px 20px 0px;
 	overflow: scroll;
 `;
 
@@ -20,6 +24,7 @@ const Editor = ({
 	workout,
 	createWorkout,
 	updateWorkout,
+	deleteWorkout,
 	clearWorkout
 }) => {
 	const handleCreate = () => {
@@ -37,13 +42,23 @@ const Editor = ({
 		clearWorkout();
 	};
 
+	const handleDelete = () => {
+		deleteWorkout(token, workout._id);
+		clearWorkout();
+	};
+
 	return (
 		<Container>
 			<Details workout={workout} />
 			<ExerciseList exercises={workout.exercises} />
-			<Button width="100%" onClick={handleCreate}>
+			<ButtonAction width="100%" onClick={handleCreate}>
 				{workout.isNew ? "create" : "update"}
-			</Button>
+			</ButtonAction>
+			{!workout.isNew && (
+				<ButtonAction width="100%" onClick={handleDelete}>
+					delete
+				</ButtonAction>
+			)}
 		</Container>
 	);
 };
@@ -53,5 +68,6 @@ const mapStateToProps = state => ({ token: state.user.data.token });
 export default connect(mapStateToProps, {
 	createWorkout,
 	updateWorkout,
+	deleteWorkout,
 	clearWorkout
 })(Editor);

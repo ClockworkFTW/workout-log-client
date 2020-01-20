@@ -9,13 +9,14 @@ import Landing from "./components/Landing";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import SignOut from "./components/SignOut";
+import Profile from "./components/Profile";
 import Dashboard from "./components/Dashboard";
 import ExerciseList from "./components/ExerciseList";
 import ExerciseView from "./components/ExerciseView";
 import ExerciseEditor from "./components/ExerciseEditor";
 import WorkoutList from "./components/WorkoutList";
 import WorkoutEditor from "./components/WorkoutEditor";
-import Schedule from "./components/Schedule";
+import Measure from "./components/Measure";
 
 import PrivateRoute from "./components/common/PrivateRoute";
 
@@ -26,7 +27,6 @@ const App = ({ userInit }) => {
 
 	return (
 		<Router>
-			<Header title="Strong 2.0" />
 			<Switch>
 				<Route path="/" exact>
 					<Landing />
@@ -39,6 +39,9 @@ const App = ({ userInit }) => {
 				</Route>
 				<PrivateRoute path="/sign-out">
 					<SignOut />
+				</PrivateRoute>
+				<PrivateRoute path="/profile">
+					<Profile />
 				</PrivateRoute>
 				<PrivateRoute path="/dashboard">
 					<Dashboard />
@@ -58,8 +61,8 @@ const App = ({ userInit }) => {
 				<PrivateRoute path="/workout-editor">
 					<WorkoutEditor />
 				</PrivateRoute>
-				<PrivateRoute path="/schedule">
-					<Schedule />
+				<PrivateRoute path="/measure">
+					<Measure />
 				</PrivateRoute>
 			</Switch>
 		</Router>
