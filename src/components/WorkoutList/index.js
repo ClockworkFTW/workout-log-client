@@ -8,8 +8,6 @@ import Menu from "./Menu";
 import Library from "./Library";
 import { initWorkout } from "../../reducers/workout-editor";
 
-const Container = styled.div``;
-
 const WorkoutList = ({ initWorkout, isEditing }) => {
 	// Check local storage to see if a workout was being edited
 	useEffect(() => {
@@ -20,12 +18,10 @@ const WorkoutList = ({ initWorkout, isEditing }) => {
 	return isEditing ? (
 		<Redirect to="/workout-editor" />
 	) : (
-		<Container>
-			<MainLayout>
-				<Menu />
-				<Library />
-			</MainLayout>
-		</Container>
+		<MainLayout>
+			<Menu />
+			<Library />
+		</MainLayout>
 	);
 };
 

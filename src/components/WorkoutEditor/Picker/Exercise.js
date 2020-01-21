@@ -18,6 +18,7 @@ const Container = styled.div`
 	&:hover {
 		cursor: pointer;
 		transform: scale(1.05);
+		box-shadow: 0px 3px 6px 0px rgba(102, 126, 234, 0.2);
 	}
 `;
 

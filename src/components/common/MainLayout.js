@@ -12,16 +12,18 @@ const Main = styled.div`
 	width: 100%;
 `;
 const Content = styled.div`
-	height: ${props => `calc(100% - ${props.headerHeight}px)`};
+	height: ${props => `calc(100% - ${props.headerHeight})`};
+	background: #f7fafc;
+	overflow: scroll;
 `;
 
 const MainLayout = ({ children }) => {
-	const [headerHeight, setHeaderHeight] = useState(null);
+	const headerHeight = "50px";
 	return (
 		<Container>
-			<Sidebar />
+			<Sidebar headerHeight={headerHeight} />
 			<Main>
-				<Header setHeaderHeight={setHeaderHeight}>{children[0]}</Header>
+				<Header headerHeight={headerHeight}>{children[0]}</Header>
 				<Content headerHeight={headerHeight}>{children[1]}</Content>
 			</Main>
 		</Container>

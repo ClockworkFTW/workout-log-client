@@ -1,25 +1,26 @@
 import React from "react";
 import styled from "styled-components";
 import { withRouter, Link as A } from "react-router-dom";
-import { FontAwesomeIcon as I } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Container = styled.div``;
+const Container = styled.div`
+	margin: 20px 0px;
+`;
 const Link = styled(A)`
 	padding: 10px 20px;
 	opacity: ${props => (props.active ? "1" : "0.5")};
-	background: ${props => (props.active ? "#4A5568" : "none")};
+	background: ${props => (props.active ? "#1A202C" : "none")};
 	display: block;
 	font-size: 14px;
-	font-weight: 700;
 	text-decoration: none;
-	text-transform: uppercase;
+	text-transform: capitalize;
 	color: #ffffff;
 	&:hover {
 		opacity: 1;
-		background: #4a5568;
+		background: #1a202c;
 	}
 `;
-const Icon = styled(I)`
+const Icon = styled(FontAwesomeIcon)`
 	width: 20px !important;
 	color: #ffffff;
 `;

@@ -6,9 +6,7 @@ import Card from "./Card";
 import { fetchExercises } from "../../reducers/exercise-list";
 
 const Container = styled.div`
-	height: 100%;
 	padding: 20px 10px 0px 10px;
-	overflow: scroll;
 `;
 
 const Library = ({ token, exercises, fetchExercises }) => {
