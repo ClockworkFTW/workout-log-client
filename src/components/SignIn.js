@@ -16,7 +16,7 @@ import {
 } from "./common";
 
 const Wrapper = styled.div`
-	height: calc(100vh - 45px);
+	height: 100vh;
 	padding: 20px;
 	display: flex;
 	justify-content: center;

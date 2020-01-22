@@ -9,13 +9,13 @@ import Toggle from "./Toggle";
 
 const Container = styled.div`
 	position: relative;
-	flex: ${props => (props.toggle ? "0 0 200px" : "0 0 auto")};
+	flex: ${props => (props.toggle ? "0 0 250px" : "0 0 auto")};
 	background: #2e3749;
 `;
 
 const Sidebar = ({ user, toggle, toggleSidebar, headerHeight }) => (
 	<Container toggle={toggle}>
-		<Logo toggle={toggle} headerHeight={headerHeight} />
+		<Logo toggle={toggle} title="Lift" headerHeight={headerHeight} />
 		<Navigation toggle={toggle} />
 		<Toggle toggle={toggle} toggleSidebar={toggleSidebar} />
 	</Container>

@@ -93,7 +93,6 @@ const Editor = props => {
 			{!exercise.isNew && (
 				<ButtonPrimary onClick={handleDelete}>delete</ButtonPrimary>
 			)}
-			<ButtonPrimary onClick={clearExercise}>cancel</ButtonPrimary>
 		</Container>
 	);
 };

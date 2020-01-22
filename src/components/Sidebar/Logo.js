@@ -19,11 +19,11 @@ const Text = styled.span`
 	margin-left: 10px;
 `;
 
-const Logo = ({ toggle, headerHeight }) => (
+const Logo = ({ toggle, title, headerHeight }) => (
 	<Container>
 		<Link to="/dashboard" height={headerHeight}>
 			<Icon icon={["fas", "dumbbell"]} />
-			{toggle && <Text>Strong</Text>}
+			{toggle && <Text>{title}</Text>}
 		</Link>
 	</Container>
 );

@@ -15,7 +15,7 @@ import {
 } from "./common";
 
 const Wrapper = styled.div`
-	height: calc(100vh - 45px);
+	height: 100vh;
 	padding: 20px;
 	display: flex;
 	justify-content: center;
@@ -35,12 +35,19 @@ const Form = styled.form``;
 const SignUp = ({ user, userSignUp }) => {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
+	const [birthday, setBirthday] = useState("");
 	const [passwordOne, setPasswordOne] = useState("");
 	const [passwordTwo, setPasswordTwo] = useState("");
 
 	const handleSubmit = event => {
 		event.preventDefault();
-		userSignUp({ username, email, passwordOne, passwordTwo });
+		userSignUp({
+			username,
+			email,
+			birthday: new Date(birthday),
+			passwordOne,
+			passwordTwo
+		});
 	};
 
 	return user ? (
@@ -74,6 +81,16 @@ const SignUp = ({ user, userSignUp }) => {
 							width="100%"
 							value={email}
 							onChange={event => setEmail(event.target.value)}
+						/>
+					</Group>
+					<Group>
+						<Label htmlFor="birthday">birthday</Label>
+						<Input
+							id="birthday"
+							type="date"
+							width="100%"
+							value={birthday}
+							onChange={event => setBirthday(event.target.value)}
 						/>
 					</Group>
 					<Group>

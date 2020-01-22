@@ -4,19 +4,18 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { userInit } from "./reducers/user";
 
-import Header from "./components/Header";
 import Landing from "./components/Landing";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import SignOut from "./components/SignOut";
-import Profile from "./components/Profile";
+import Settings from "./components/Settings";
 import Dashboard from "./components/Dashboard";
 import ExerciseList from "./components/ExerciseList";
 import ExerciseView from "./components/ExerciseView";
 import ExerciseEditor from "./components/ExerciseEditor";
 import WorkoutList from "./components/WorkoutList";
 import WorkoutEditor from "./components/WorkoutEditor";
-import Measure from "./components/Measure";
+import MeasurementList from "./components/MeasurementList";
 
 import PrivateRoute from "./components/common/PrivateRoute";
 
@@ -40,8 +39,8 @@ const App = ({ userInit }) => {
 				<PrivateRoute path="/sign-out">
 					<SignOut />
 				</PrivateRoute>
-				<PrivateRoute path="/profile">
-					<Profile />
+				<PrivateRoute path="/settings">
+					<Settings />
 				</PrivateRoute>
 				<PrivateRoute path="/dashboard">
 					<Dashboard />
@@ -61,8 +60,8 @@ const App = ({ userInit }) => {
 				<PrivateRoute path="/workout-editor">
 					<WorkoutEditor />
 				</PrivateRoute>
-				<PrivateRoute path="/measure">
-					<Measure />
+				<PrivateRoute path="/measurement-list">
+					<MeasurementList />
 				</PrivateRoute>
 			</Switch>
 		</Router>

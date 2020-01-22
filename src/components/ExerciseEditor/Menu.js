@@ -6,6 +6,7 @@ import { ButtonPrimary } from "../common";
 import { clearExercise } from "../../reducers/exercise-editor";
 
 const Container = styled.div`
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -13,6 +14,7 @@ const Container = styled.div`
 
 const Menu = ({ clearExercise }) => (
 	<Container>
+		<h1>menu</h1>
 		<ButtonPrimary onClick={clearExercise}>cancel</ButtonPrimary>
 	</Container>
 );

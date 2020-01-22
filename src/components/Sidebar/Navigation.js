@@ -53,11 +53,14 @@ const Navigation = ({ toggle, location }) => (
 			<Icon icon={["fas", "clipboard"]} />
 			{toggle && <Text>workouts</Text>}
 		</Link>
-		<Link to="/measure" active={isActive("/measure", location.pathname)}>
+		<Link
+			to="/measurement-list"
+			active={isActive("/measurement", location.pathname)}
+		>
 			<Icon icon={["fas", "ruler-vertical"]} />
 			{toggle && <Text>measurements</Text>}
 		</Link>
-		<Link to="/profile" active={isActive("/profile", location.pathname)}>
+		<Link to="/settings" active={isActive("/settings", location.pathname)}>
 			<Icon icon={["fas", "cog"]} />
 			{toggle && <Text>settings</Text>}
 		</Link>

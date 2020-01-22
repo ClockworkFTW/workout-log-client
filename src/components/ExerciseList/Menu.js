@@ -7,8 +7,10 @@ import { ButtonPrimary } from "../common";
 import { newExercise } from "../../reducers/exercise-editor";
 
 const Container = styled.div`
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 `;
 
 const Menu = ({ newExercise }) => (

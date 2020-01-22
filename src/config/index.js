@@ -27,3 +27,22 @@ export const muscle = [
 	"abs",
 	"neck"
 ];
+
+export const measurements = [
+	"height",
+	"weight",
+	"bodyfat percentage",
+	"neck",
+	"shoulders",
+	"chest",
+	"left bicep",
+	"right bicep",
+	"left forearm",
+	"right forearm",
+	"waist",
+	"hips",
+	"left thigh",
+	"right thigh",
+	"left calf",
+	"right calf"
+];

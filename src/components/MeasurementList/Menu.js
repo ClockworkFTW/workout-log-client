@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import { RouterLink, ButtonPrimary } from "../common";
-
 const Container = styled.div`
 	width: 100%;
 	display: flex;
@@ -10,12 +8,9 @@ const Container = styled.div`
 	align-items: center;
 `;
 
-const Menu = ({ name }) => (
+const Menu = () => (
 	<Container>
 		<h1>menu</h1>
-		<RouterLink to="/exercise-list">
-			<ButtonPrimary>back</ButtonPrimary>
-		</RouterLink>
 	</Container>
 );
 

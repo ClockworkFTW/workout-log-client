@@ -7,6 +7,7 @@ import exerciseEditorReducer from "./exercise-editor";
 import exerciseFilterReducer from "./exercise-filter";
 import workoutListReducer from "./workout-list";
 import workoutEditorReducer from "./workout-editor";
+import measurementListReducer from "./measurement-list";
 
 const rootReducer = combineReducers({
 	sidebar: sidebarReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
 	exerciseEditor: exerciseEditorReducer,
 	exerciseFilter: exerciseFilterReducer,
 	workoutList: workoutListReducer,
-	workoutEditor: workoutEditorReducer
+	workoutEditor: workoutEditorReducer,
+	measurementList: measurementListReducer
 });
 
 export default rootReducer;

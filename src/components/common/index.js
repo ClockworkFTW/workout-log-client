@@ -19,7 +19,6 @@ export const Input = styled.input`
 	padding: 5px 10px;
 	font-family: inherit;
 	font-size: 14px;
-	text-transform: capitalize;
 	background: #ffffff;
 	outline: none;
 	border: 1px solid #e2e8f0;
