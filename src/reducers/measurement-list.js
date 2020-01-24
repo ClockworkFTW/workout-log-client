@@ -37,7 +37,7 @@ export const updateMeasurements = (token, measurements) => {
 
 const INITIAL_STATE = {
 	pending: false,
-	data: null,
+	data: { sections: [] },
 	error: null
 };
 

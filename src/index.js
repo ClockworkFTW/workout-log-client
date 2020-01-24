@@ -21,6 +21,15 @@ const GlobalStyle = createGlobalStyle`
 	*, *:before, *:after {
 		box-sizing: inherit;
 	}
+	input[type=number] {
+		-webkit-appearance: textfield;
+		-moz-appearance: textfield;
+		appearance: textfield;
+	}
+	input[type=number]::-webkit-inner-spin-button, 
+	input[type=number]::-webkit-outer-spin-button { 
+		-webkit-appearance: none;
+	}
 `;
 
 ReactDOM.render(

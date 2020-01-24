@@ -17,6 +17,7 @@ export const Input = styled.input`
 	width: ${props => props.width};
 	margin: ${props => props.margin};
 	padding: 5px 10px;
+	text-align: ${props => props.align || "left"};
 	font-family: inherit;
 	font-size: 14px;
 	background: #ffffff;

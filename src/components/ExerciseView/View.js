@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Header3 } from "../common";
 import Anatomy from "../common/Anatomy";
 
 const Container = styled.div`
