@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import styled from "styled-components";
 import { Redirect } from "react-router-dom";
 
 import {
@@ -10,8 +11,14 @@ import {
 } from "../../reducers/measurement-editor";
 import { updateMeasurements } from "../../reducers/measurement-list";
 import Menu from "./Menu";
-import Editor from "./Editor";
+import History from "./History";
+import Chart from "../common/Chart";
 import MainLayout from "../common/MainLayout";
+
+const Main = styled.div`
+	height: 100%;
+	display: flex;
+`;
 
 const MeasurementEditor = props => {
 	// Destructure props
@@ -35,16 +42,35 @@ const MeasurementEditor = props => {
 		clearMeasurement();
 	};
 
+	// Sort data from newest to oldest
+	const sortDescending = data =>
+		data.sort((a, b) => new Date(b.x) - new Date(a.x));
+
 	// Redirect to measurement list if editor state is empty
 	return isEditing ? (
 		<MainLayout>
-			<Menu handleSave={handleSave} clearMeasurement={clearMeasurement} />
-			<Editor
-				section={isEditing}
+			<Menu
 				addMeasurement={addMeasurement}
-				modifyMeasurement={modifyMeasurement}
-				deleteMeasurement={deleteMeasurement}
+				handleSave={handleSave}
+				clearMeasurement={clearMeasurement}
 			/>
+			<Main>
+				<History
+					data={sortDescending(isEditing.data)}
+					addMeasurement={addMeasurement}
+					modifyMeasurement={modifyMeasurement}
+					deleteMeasurement={deleteMeasurement}
+				/>
+				<Chart
+					width="100%"
+					height="100%"
+					padding="20px 20px 20px 0px"
+					color="#687eea"
+					grid={true}
+					area={true}
+					data={isEditing}
+				/>
+			</Main>
 		</MainLayout>
 	) : (
 		<Redirect to="/measurement-list" />

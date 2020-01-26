@@ -13,7 +13,7 @@ const Main = styled.div`
 `;
 const Content = styled.div`
 	height: ${props => `calc(100% - ${props.headerHeight})`};
-	background: #f7fafc;
+	background: #edf2f7;
 	overflow: scroll;
 `;
 

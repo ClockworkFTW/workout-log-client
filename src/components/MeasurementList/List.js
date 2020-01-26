@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Header3 } from "../common";
-import Chart from "./Chart";
+import Chart from "../common/Chart";
 
 const Wrapper = styled.div`
 	padding: 20px 20px 0px 20px;
@@ -10,10 +10,6 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
 	margin-bottom: 20px;
-	padding: 20px;
-	border: 1px solid #e2e8f0;
-	border-radius: 5px;
-	background: #ffffff;
 	&:hover {
 		cursor: pointer;
 	}
@@ -27,7 +23,14 @@ const List = ({ measurements, editMeasurement }) => (
 				onClick={() => editMeasurement(section)}
 			>
 				<Header3>{section.id}</Header3>
-				<Chart width="100%" height="200px" data={section} />
+				<Chart
+					width="100%"
+					height="200px"
+					color="#687eea"
+					grid={false}
+					area={true}
+					data={section}
+				/>
 			</Container>
 		))}
 	</Wrapper>

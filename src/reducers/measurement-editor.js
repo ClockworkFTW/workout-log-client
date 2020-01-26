@@ -51,24 +51,61 @@ const measurementEditorReducer = (state = null, action) => {
 };
 
 const handleAddMeasurement = state => {
-	// Initialize new data point today (x) using last known measurement (y)
-	const x = moment().format("YYYY-MM-DD");
-	const y = state.data[state.data.length - 1].y;
+	const { data } = state;
 
-	return { ...state, data: [...state.data, { x, y }] };
+	// Find last known date
+	let x;
+	const dates = data.map(data => data.x);
+
+	// If no data exists set date to today
+	if (dates.length === 0) {
+		x = moment().format("YYYY-MM-DD");
+	}
+
+	// Else set date to latest date + 1
+	else {
+		const latestDate = dates.reduce((a, b) =>
+			new Date(a) > new Date(b) ? a : b
+		);
+		x = moment(latestDate)
+			.add(1, "d")
+			.format("YYYY-MM-DD");
+	}
+
+	const y = data.length === 0 ? 0 : data[data.length - 1].y;
+
+	// Return new data point
+	return { ...state, data: [...data, { x, y }] };
 };
 
 const handleModifyMeasurement = (state, action) => {
 	const { i, x, y } = action.edit;
 	let data;
 
-	// Modify date (x) and reorder data
+	// Modify date (x)
 	if (i || i === 0) {
-		data = state.data.map((data, index) =>
-			index === i ? { x, y: Number(y) } : data
-		);
+		const overwrite = state.data.findIndex(data => data.x === x);
+
+		// Overwrite existing date entry
+		if (overwrite !== -1) {
+			data = state.data
+				.map((data, index) =>
+					index === overwrite ? { x, y: Number(y) } : data
+				)
+				.filter((data, index) => index !== i);
+		}
+
+		// Create new date entry
+		else {
+			data = state.data.map((data, index) =>
+				index === i ? { x, y: Number(y) } : data
+			);
+		}
+
+		// Reorder data from oldest to newest
 		data = data.sort((a, b) => new Date(a.x) - new Date(b.x));
 	}
+
 	// Modify measurement (y)
 	else {
 		data = state.data.map(data =>

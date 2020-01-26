@@ -9,15 +9,17 @@ const Container = styled.div`
 	justify-content: space-between;
 	align-items: center;
 `;
-const Buttons = styled.div``;
+const Group = styled.div``;
 
-const Menu = ({ handleSave, clearMeasurement }) => (
+const Menu = ({ addMeasurement, handleSave, clearMeasurement }) => (
 	<Container>
-		<h1>menu</h1>
-		<Buttons>
+		<ButtonAction width="260px" onClick={addMeasurement}>
+			add measurement
+		</ButtonAction>
+		<Group>
 			<ButtonPrimary onClick={clearMeasurement}>back</ButtonPrimary>
 			<ButtonAction onClick={handleSave}>save</ButtonAction>
-		</Buttons>
+		</Group>
 	</Container>
 );
 
