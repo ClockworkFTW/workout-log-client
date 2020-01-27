@@ -13,7 +13,7 @@ const Container = styled.div`
 	background: #2e3749;
 `;
 
-const Sidebar = ({ user, toggle, toggleSidebar, headerHeight }) => (
+const Sidebar = ({ toggle, toggleSidebar, headerHeight }) => (
 	<Container toggle={toggle}>
 		<Logo toggle={toggle} title="Lift" headerHeight={headerHeight} />
 		<Navigation toggle={toggle} />
@@ -22,7 +22,6 @@ const Sidebar = ({ user, toggle, toggleSidebar, headerHeight }) => (
 );
 
 const mapStateToProps = state => ({
-	user: state.user.data,
 	toggle: state.sidebar
 });
 

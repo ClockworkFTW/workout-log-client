@@ -7,7 +7,7 @@ import Card from "./Card";
 import ErrorMessage from "./ErrorMessage";
 
 const Container = styled.div`
-	height: calc(100% - 75px);
+	height: 100%;
 	padding: 20px 10px 20px 10px;
 	overflow: scroll;
 `;

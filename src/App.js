@@ -15,6 +15,7 @@ import ExerciseView from "./components/ExerciseView";
 import ExerciseEditor from "./components/ExerciseEditor";
 import WorkoutList from "./components/WorkoutList";
 import WorkoutEditor from "./components/WorkoutEditor";
+import WorkoutSession from "./components/WorkoutSession";
 import MeasurementList from "./components/MeasurementList";
 import MeasurementEditor from "./components/MeasurementEditor";
 
@@ -61,7 +62,10 @@ const App = ({ userInit }) => {
 				<PrivateRoute path="/workout-editor">
 					<WorkoutEditor />
 				</PrivateRoute>
-				<PrivateRoute path="/measurement-list" exact>
+				<PrivateRoute path="/workout-session">
+					<WorkoutSession />
+				</PrivateRoute>
+				<PrivateRoute path="/measurement-list">
 					<MeasurementList />
 				</PrivateRoute>
 				<PrivateRoute path="/measurement-editor">

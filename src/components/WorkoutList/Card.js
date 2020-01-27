@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import { startWorkout } from "../../reducers/workout-session";
 import { editWorkout } from "../../reducers/workout-editor";
 import { Header3, Tag, ButtonPrimary } from "../common";
 
@@ -31,7 +32,7 @@ const getMuscles = exercises => {
 	return [...new Set(muscles)];
 };
 
-const Card = ({ workout, editWorkout }) => (
+const Card = ({ workout, startWorkout, editWorkout }) => (
 	<Container>
 		<Header3>{workout.name}</Header3>
 		{getMuscles(workout.exercises).map((muscle, index) => (
@@ -40,7 +41,9 @@ const Card = ({ workout, editWorkout }) => (
 			</Tag>
 		))}
 		<Buttons>
-			<ButtonPrimary>start</ButtonPrimary>
+			<ButtonPrimary onClick={() => startWorkout(workout)}>
+				start
+			</ButtonPrimary>
 			<ButtonPrimary onClick={() => editWorkout(workout)}>
 				edit
 			</ButtonPrimary>
@@ -48,4 +51,4 @@ const Card = ({ workout, editWorkout }) => (
 	</Container>
 );
 
-export default connect(null, { editWorkout })(Card);
+export default connect(null, { startWorkout, editWorkout })(Card);
