@@ -26,7 +26,7 @@ const WorkoutList = ({ initWorkout, isEditing, isSession }) => {
 
 const mapStateToProps = state => ({
 	isEditing: state.workoutEditor,
-	isSession: state.workoutSession
+	isSession: state.workoutSession.workout
 });
 
 export default connect(mapStateToProps, { initWorkout })(WorkoutList);
