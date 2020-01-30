@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const Group = styled.div`
 	margin: ${props => props.margin || "0px 0px 20px 0px"};
@@ -92,10 +93,20 @@ export const ButtonAction = styled.button`
 	}
 `;
 
+export const ButtonClear = styled.button`
+	margin: ${props => props.margin};
+	padding: 0px;
+	border: none;
+	outline: none;
+	background: none;
+	&:hover {
+		cursor: pointer;
+	}
+`;
+
 //Headers
 const sharedHeader = css`
-	margin-top: 5px;
-	margin-bottom: 10px;
+	margin: ${props => props.margin};
 	font-weight: 700;
 	text-transform: capitalize;
 	color: #2d3748;
@@ -163,4 +174,11 @@ export const Tag = styled.div`
 	border-radius: 5px;
 	background: #677eea;
 	color: #ffffff;
+`;
+
+// Icons
+export const Icon = styled(FontAwesomeIcon)`
+	margin: ${props => props.margin};
+	color: ${props => props.color};
+	font-size: ${props => props.fontSize};
 `;

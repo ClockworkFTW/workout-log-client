@@ -73,6 +73,7 @@ const Option = styled.div`
 	background: #ffffff;
 	font-size: 14px;
 	text-transform: capitalize;
+	text-align: left;
 	line-height: 18px;
 	color: #2d3748;
 	transition: all ease-in-out 0.1s;

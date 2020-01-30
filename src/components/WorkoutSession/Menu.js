@@ -1,8 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
-import moment from "moment";
 
-import { ButtonPrimary } from "../common";
+import { finishWorkout } from "../../reducers/workout-session";
+import { Header3, ButtonPrimary } from "../common";
+import SessionTimer from "./SessionTimer";
+import RestTimer from "./RestTimer";
+
+const Menu = ({ name, restDuration, finishWorkout }) => (
+	<Container>
+		<Info>
+			<Header3 margin="0px 10px 0px 0px">{name}</Header3>
+			{restDuration ? <RestTimer /> : <SessionTimer />}
+		</Info>
+		<ButtonPrimary onClick={finishWorkout}>finish</ButtonPrimary>
+	</Container>
+);
 
 const Container = styled.div`
 	width: 100%;
@@ -10,28 +23,13 @@ const Container = styled.div`
 	justify-content: space-between;
 	align-items: center;
 `;
+const Info = styled.div`
+	display: flex;
+	align-items: center;
+`;
 
-const Menu = ({ name, startedAt, finishedAt, finishWorkout }) => {
-	const [timer, setTimer] = useState(
-		moment.utc(new Date() - startedAt).format("HH:mm:ss")
-	);
+const mapStateToProps = state => ({
+	restDuration: state.workoutSession.restDuration
+});
 
-	useEffect(() => {
-		setInterval(
-			() =>
-				setTimer(moment.utc(new Date() - startedAt).format("HH:mm:ss")),
-			1000
-		);
-	}, []);
-
-	return (
-		<Container>
-			<h1>
-				{name} {timer}
-			</h1>
-			<ButtonPrimary onClick={finishWorkout}>finish</ButtonPrimary>
-		</Container>
-	);
-};
-
-export default Menu;
+export default connect(mapStateToProps, { finishWorkout })(Menu);

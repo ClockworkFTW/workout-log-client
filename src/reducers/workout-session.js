@@ -1,17 +1,16 @@
+import moment from "moment";
+
 const WORKOUT_SESSION_START_WORKOUT = "WORKOUT_SESSION_START_WORKOUT";
 const WORKOUT_SESSION_MODIFY_WORKOUT = "WORKOUT_SESSION_MODIFY_WORKOUT";
 const WORKOUT_SESSION_FINISH_WORKOUT = "WORKOUT_SESSION_FINISH_WORKOUT";
 
 const WORKOUT_SESSION_TOGGLE_SET = "WORKOUT_SESSION_TOGGLE_SET";
+const WORKOUT_SESSION_START_REST_TIMER = "WORKOUT_SESSION_START_REST_TIMER";
+const WORKOUT_SESSION_RESET_REST_TIMER = "WORKOUT_SESSION_RESET_REST_TIMER";
 
 export const startWorkout = workout => ({
 	type: WORKOUT_SESSION_START_WORKOUT,
 	data: { workout, time: new Date() }
-});
-
-export const modifyWorkout = edit => ({
-	type: WORKOUT_SESSION_MODIFY_WORKOUT,
-	edit
 });
 
 export const finishWorkout = () => ({
@@ -19,14 +18,25 @@ export const finishWorkout = () => ({
 	time: new Date()
 });
 
-export const completeSet = (exerciseIndex, setIndex) => ({
-	type: WORKOUT_SESSION_TOGGLE_SET,
-	index: { exerciseIndex, setIndex }
+export const modifySet = (prop, val, exerciseIndex, setIndex) => ({
+	type: WORKOUT_SESSION_MODIFY_WORKOUT,
+	edit: { prop, val, exerciseIndex, setIndex }
+});
+
+export const startRestTimer = time => ({
+	type: WORKOUT_SESSION_START_REST_TIMER,
+	time
+});
+
+export const resetRestTimer = () => ({
+	type: WORKOUT_SESSION_RESET_REST_TIMER
 });
 
 const INITIAL_STATE = {
 	startedAt: null,
 	finishedAt: null,
+	restDuration: null,
+	restEndTime: null,
 	workout: null
 };
 
@@ -41,7 +51,8 @@ const workoutSessionReducer = (state = INITIAL_STATE, action) => {
 			};
 			return newState;
 		case WORKOUT_SESSION_MODIFY_WORKOUT:
-			return state;
+			newState = handleModifySet(state, action);
+			return newState;
 		case WORKOUT_SESSION_FINISH_WORKOUT:
 			newState = {
 				...state,
@@ -49,22 +60,28 @@ const workoutSessionReducer = (state = INITIAL_STATE, action) => {
 				finishedAt: action.time
 			};
 			return newState;
-		case WORKOUT_SESSION_TOGGLE_SET:
-			newState = handleToggleSet(state, action);
+		case WORKOUT_SESSION_START_REST_TIMER:
+			newState = {
+				...state,
+				restDuration: action.time * 1000,
+				restEndTime: moment.utc().add(action.time, "s")
+			};
+			return newState;
+		case WORKOUT_SESSION_RESET_REST_TIMER:
+			newState = { ...state, restDuration: null, restEndTime: null };
 			return newState;
 		default:
 			return state;
 	}
 };
 
-const handleToggleSet = (state, action) => {
+const handleModifySet = (state, action) => {
+	const { prop, val, exerciseIndex, setIndex } = action.edit;
 	const { exercises } = state.workout;
-	const { exerciseIndex, setIndex } = action.index;
 
 	const updateSets = (set, index) => {
 		if (index === setIndex) {
-			const complete = set.complete;
-			return { ...set, complete: !complete };
+			return { ...set, [prop]: val };
 		} else {
 			return set;
 		}

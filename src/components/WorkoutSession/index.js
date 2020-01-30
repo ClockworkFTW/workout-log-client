@@ -2,41 +2,20 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
-import { completeSet, finishWorkout } from "../../reducers/workout-session";
 import MainLayout from "../common/MainLayout";
 import Menu from "./Menu";
-import Session from "./Session";
+import Workout from "./Workout";
 
-const WorkoutSession = props => {
-	const {
-		workout,
-		startedAt,
-		finishedAt,
-		completeSet,
-		finishWorkout
-	} = props;
-
-	return workout ? (
+const WorkoutSession = ({ workout }) =>
+	workout ? (
 		<MainLayout>
-			<Menu
-				name={workout.name}
-				startedAt={startedAt}
-				finishedAt={finishedAt}
-				finishWorkout={finishWorkout}
-			/>
-			<Session workout={workout} completeSet={completeSet} />
+			<Menu name={workout.name} />
+			<Workout workout={workout} />
 		</MainLayout>
 	) : (
 		<Redirect to={"/workout-list"} />
 	);
-};
 
-const mapStateToProps = state => ({
-	workout: state.workoutSession.workout,
-	startedAt: state.workoutSession.startedAt,
-	finishedAt: state.workoutSession.finishedAt
-});
+const mapStateToProps = state => ({ workout: state.workoutSession.workout });
 
-const mapActionsToProps = { completeSet, finishWorkout };
-
-export default connect(mapStateToProps, mapActionsToProps)(WorkoutSession);
+export default connect(mapStateToProps)(WorkoutSession);
