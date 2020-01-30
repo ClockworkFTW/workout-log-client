@@ -22,7 +22,7 @@ const Workout = ({ workout, modifySet, startRestTimer, resetRestTimer }) => (
 			<Exercise
 				key={index}
 				exercise={exercise}
-				exerciseIndex={index}
+				exrInd={index}
 				modifySet={modifySet}
 				startRestTimer={startRestTimer}
 				resetRestTimer={resetRestTimer}

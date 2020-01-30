@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { setType } from "../../config";
-import { Header4, ButtonClear, Icon } from "../common";
+import { Header4, ButtonAction, ButtonClear, Icon } from "../common";
 import SelectInput from "../common/SelectInput";
 
 // Exercise table
@@ -10,19 +10,19 @@ import SelectInput from "../common/SelectInput";
 const Exercise = props => {
 	const {
 		exercise,
-		exerciseIndex,
+		exrInd,
 		modifySet,
 		startRestTimer,
 		resetRestTimer
 	} = props;
 
-	const handleCompleteSet = (prop, complete, setIndex, time) => {
+	const handleCompleteSet = (opr, prop, complete, setInd, time) => {
 		// Fix timer reset
 		resetRestTimer();
 		if (!complete) {
 			startRestTimer(time);
 		}
-		modifySet(prop, !complete, exerciseIndex, setIndex);
+		modifySet(opr, prop, !complete, exrInd, setInd);
 	};
 
 	return (
@@ -37,16 +37,25 @@ const Exercise = props => {
 						{ align: "center", text: "type" },
 						{ align: "center", text: "weight" },
 						{ align: "center", text: "sets" },
-						{ align: "center", text: "rest" }
+						{ align: "center", text: "rest" },
+						{ align: "right", text: "drop" }
 					]}
 				/>
 				<Body
 					exercise={exercise}
-					exerciseIndex={exerciseIndex}
+					exrInd={exrInd}
 					handleCompleteSet={handleCompleteSet}
 					modifySet={modifySet}
 				/>
 			</Table>
+			<Footer>
+				<ButtonAction
+					width="100%"
+					onClick={() => modifySet("add", null, null, exrInd)}
+				>
+					add set
+				</ButtonAction>
+			</Footer>
 		</Container>
 	);
 };
@@ -67,6 +76,10 @@ const Table = styled.table`
 	padding: 12px;
 	border-collapse: separate;
 	border-spacing: 0px 4px;
+`;
+const Footer = styled.div`
+	padding: 16px 20px;
+	border-top: 1px solid #e2e8f0;
 `;
 
 // Exercise table head
@@ -93,7 +106,7 @@ const HeaderCell = styled.th`
 
 // Exercise table body
 
-const Body = ({ exercise, exerciseIndex, handleCompleteSet, modifySet }) => (
+const Body = ({ exercise, exrInd, handleCompleteSet, modifySet }) => (
 	<tbody>
 		{exercise.sets.map((set, index) => (
 			<tr key={index}>
@@ -105,6 +118,7 @@ const Body = ({ exercise, exerciseIndex, handleCompleteSet, modifySet }) => (
 					<ButtonClear
 						onClick={() =>
 							handleCompleteSet(
+								"edit",
 								"complete",
 								set.complete,
 								index,
@@ -128,7 +142,7 @@ const Body = ({ exercise, exerciseIndex, handleCompleteSet, modifySet }) => (
 						options={setType}
 						value={set.setType}
 						setValue={option =>
-							modifySet("setType", option, exerciseIndex, index)
+							modifySet("edit", "setType", option, exrInd, index)
 						}
 					/>
 				</BodyCell>
@@ -138,9 +152,10 @@ const Body = ({ exercise, exerciseIndex, handleCompleteSet, modifySet }) => (
 						value={set.weight}
 						onChange={event =>
 							modifySet(
+								"edit",
 								"weight",
 								event.target.value,
-								exerciseIndex,
+								exrInd,
 								index
 							)
 						}
@@ -152,31 +167,46 @@ const Body = ({ exercise, exerciseIndex, handleCompleteSet, modifySet }) => (
 						value={set.reps}
 						onChange={event =>
 							modifySet(
+								"edit",
 								"reps",
 								event.target.value,
-								exerciseIndex,
+								exrInd,
+								index
+							)
+						}
+					/>
+				</BodyCell>
+				<BodyCell align="center" complete={set.complete}>
+					<Input
+						type="number"
+						value={set.rest}
+						onChange={event =>
+							modifySet(
+								"edit",
+								"rest",
+								event.target.value,
+								exrInd,
 								index
 							)
 						}
 					/>
 				</BodyCell>
 				<BodyCell
-					align="center"
+					align="right"
 					borderRadius={"0px 5px 5px 0px"}
 					complete={set.complete}
 				>
-					<Input
-						type="number"
-						value={set.rest}
-						onChange={event =>
-							modifySet(
-								"rest",
-								event.target.value,
-								exerciseIndex,
-								index
-							)
+					<ButtonClear
+						onClick={() =>
+							modifySet("drop", null, null, exrInd, index)
 						}
-					/>
+					>
+						<Icon
+							icon={["fas", "square"]}
+							fontSize="20px"
+							color={set.complete ? "#48BB78" : "#edf2f7"}
+						/>
+					</ButtonClear>
 				</BodyCell>
 			</tr>
 		))}

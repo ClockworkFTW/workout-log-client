@@ -4,7 +4,6 @@ const WORKOUT_SESSION_START_WORKOUT = "WORKOUT_SESSION_START_WORKOUT";
 const WORKOUT_SESSION_MODIFY_WORKOUT = "WORKOUT_SESSION_MODIFY_WORKOUT";
 const WORKOUT_SESSION_FINISH_WORKOUT = "WORKOUT_SESSION_FINISH_WORKOUT";
 
-const WORKOUT_SESSION_TOGGLE_SET = "WORKOUT_SESSION_TOGGLE_SET";
 const WORKOUT_SESSION_START_REST_TIMER = "WORKOUT_SESSION_START_REST_TIMER";
 const WORKOUT_SESSION_RESET_REST_TIMER = "WORKOUT_SESSION_RESET_REST_TIMER";
 
@@ -13,14 +12,14 @@ export const startWorkout = workout => ({
 	data: { workout, time: new Date() }
 });
 
+export const modifySet = (opr, prop, val, exrInd, setInd) => ({
+	type: WORKOUT_SESSION_MODIFY_WORKOUT,
+	edit: { opr, prop, val, exrInd, setInd }
+});
+
 export const finishWorkout = () => ({
 	type: WORKOUT_SESSION_FINISH_WORKOUT,
 	time: new Date()
-});
-
-export const modifySet = (prop, val, exerciseIndex, setIndex) => ({
-	type: WORKOUT_SESSION_MODIFY_WORKOUT,
-	edit: { prop, val, exerciseIndex, setIndex }
 });
 
 export const startRestTimer = time => ({
@@ -75,12 +74,23 @@ const workoutSessionReducer = (state = INITIAL_STATE, action) => {
 	}
 };
 
+// CONSTRUCTORS
+
+const newSet = {
+	reps: 0,
+	weight: 0,
+	rest: 0,
+	setType: "normal"
+};
+
+// HANDLERS
+
 const handleModifySet = (state, action) => {
-	const { prop, val, exerciseIndex, setIndex } = action.edit;
+	const { opr, prop, val, exrInd, setInd } = action.edit;
 	const { exercises } = state.workout;
 
 	const updateSets = (set, index) => {
-		if (index === setIndex) {
+		if (index === setInd) {
 			return { ...set, [prop]: val };
 		} else {
 			return set;
@@ -88,10 +98,25 @@ const handleModifySet = (state, action) => {
 	};
 
 	const updateExercises = (exercise, index) => {
-		if (index === exerciseIndex) {
-			const sets = exercise.sets.map((set, index) =>
-				updateSets(set, index)
-			);
+		if (index === exrInd) {
+			let sets;
+			switch (opr) {
+				case "add":
+					sets = [...exercise.sets, newSet];
+					break;
+				case "edit":
+					sets = exercise.sets.map((set, index) =>
+						updateSets(set, index)
+					);
+					break;
+				case "drop":
+					sets = exercise.sets.filter(
+						(set, index) => index !== setInd
+					);
+					break;
+				default:
+					break;
+			}
 			return { ...exercise, sets };
 		} else {
 			return exercise;
