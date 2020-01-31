@@ -2,7 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 import { setType } from "../../config";
-import { Header4, ButtonAction, ButtonClear, Icon } from "../common";
+import {
+	RouterLink,
+	Header4,
+	ButtonAction,
+	ButtonClear,
+	Icon
+} from "../common";
 import SelectInput from "../common/SelectInput";
 
 // Exercise table
@@ -28,7 +34,10 @@ const Exercise = props => {
 	return (
 		<Container>
 			<Header>
-				<Header4>{exercise.exercise.name}</Header4>
+				<RouterLink to={`/exercise-list/${exercise.exercise._id}`}>
+					<Header4>{exercise.exercise.name}</Header4>
+				</RouterLink>
+				<Icon icon={["fas", "ellipsis-h"]} color="#4A5568"></Icon>
 			</Header>
 			<Table>
 				<Head
@@ -68,6 +77,9 @@ const Container = styled.div`
 	border-radius: 4px;
 `;
 const Header = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	padding: 16px 20px;
 	border-bottom: 1px solid #e2e8f0;
 `;
@@ -127,12 +139,9 @@ const Body = ({ exercise, exrInd, handleCompleteSet, modifySet }) => (
 						}
 					>
 						<Icon
-							icon={[
-								"fas",
-								set.complete ? "check-square" : "square"
-							]}
+							icon={["fas", "check-square"]}
 							fontSize="20px"
-							color={set.complete ? "#48BB78" : "#edf2f7"}
+							color={set.complete ? "#9AE6B4" : "#edf2f7"}
 						/>
 					</ButtonClear>
 				</BodyCell>
@@ -148,6 +157,7 @@ const Body = ({ exercise, exrInd, handleCompleteSet, modifySet }) => (
 				</BodyCell>
 				<BodyCell align="center" complete={set.complete}>
 					<Input
+						complete={set.complete}
 						type="number"
 						value={set.weight}
 						onChange={event =>
@@ -163,6 +173,7 @@ const Body = ({ exercise, exrInd, handleCompleteSet, modifySet }) => (
 				</BodyCell>
 				<BodyCell align="center" complete={set.complete}>
 					<Input
+						complete={set.complete}
 						type="number"
 						value={set.reps}
 						onChange={event =>
@@ -178,6 +189,7 @@ const Body = ({ exercise, exrInd, handleCompleteSet, modifySet }) => (
 				</BodyCell>
 				<BodyCell align="center" complete={set.complete}>
 					<Input
+						complete={set.complete}
 						type="number"
 						value={set.rest}
 						onChange={event =>
@@ -204,7 +216,7 @@ const Body = ({ exercise, exrInd, handleCompleteSet, modifySet }) => (
 						<Icon
 							icon={["fas", "square"]}
 							fontSize="20px"
-							color={set.complete ? "#48BB78" : "#edf2f7"}
+							color={set.complete ? "#9AE6B4" : "#edf2f7"}
 						/>
 					</ButtonClear>
 				</BodyCell>
@@ -227,12 +239,12 @@ const Input = styled.input`
 	padding: 4px;
 	border: none;
 	border-radius: 4px;
-	background: #edf2f7;
+	background: ${props => (props.complete ? "#9AE6B4" : "#edf2f7")};
 	outline: none;
 	text-align: center;
 	font-size: 14px;
 	font-family: inherit;
-	color: #4a5568;
+	color: ${props => (props.complete ? "#276749" : "#4a5568")};
 `;
 
 export default Exercise;

@@ -1,12 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useCallback } from "react";
 import styled from "styled-components";
+import { DragDropContext } from "react-beautiful-dnd";
 
-import {
-	modifySet,
-	startRestTimer,
-	resetRestTimer
-} from "../../reducers/workout-session";
 import Exercise from "./Exercise";
 
 const Container = styled.div`
@@ -16,25 +11,27 @@ const Container = styled.div`
 	overflow: scroll;
 `;
 
-const Workout = ({ workout, modifySet, startRestTimer, resetRestTimer }) => (
-	<Container>
-		{workout.exercises.map((exercise, index) => (
-			<Exercise
-				key={index}
-				exercise={exercise}
-				exrInd={index}
-				modifySet={modifySet}
-				startRestTimer={startRestTimer}
-				resetRestTimer={resetRestTimer}
-			/>
-		))}
-	</Container>
-);
+const Workout = ({ workout, modifySet, startRestTimer, resetRestTimer }) => {
+	const onDragEnd = useCallback(() => {
+		// the only one that is required
+	}, []);
 
-const mapActionsToProps = {
-	modifySet,
-	startRestTimer,
-	resetRestTimer
+	return (
+		<DragDropContext onDragEnd={onDragEnd}>
+			<Container>
+				{workout.exercises.map((exercise, index) => (
+					<Exercise
+						key={index}
+						exercise={exercise}
+						exrInd={index}
+						modifySet={modifySet}
+						startRestTimer={startRestTimer}
+						resetRestTimer={resetRestTimer}
+					/>
+				))}
+			</Container>
+		</DragDropContext>
+	);
 };
 
-export default connect(null, mapActionsToProps)(Workout);
+export default Workout;

@@ -18,8 +18,7 @@ export const modifySet = (opr, prop, val, exrInd, setInd) => ({
 });
 
 export const finishWorkout = () => ({
-	type: WORKOUT_SESSION_FINISH_WORKOUT,
-	time: new Date()
+	type: WORKOUT_SESSION_FINISH_WORKOUT
 });
 
 export const startRestTimer = time => ({
@@ -32,42 +31,52 @@ export const resetRestTimer = () => ({
 });
 
 const INITIAL_STATE = {
-	startedAt: null,
-	finishedAt: null,
-	restDuration: null,
-	restEndTime: null,
+	time: {
+		sessionStart: null,
+		restDuration: null,
+		restEnd: null
+	},
 	workout: null
 };
 
 const workoutSessionReducer = (state = INITIAL_STATE, action) => {
 	let newState;
 	switch (action.type) {
+		// Initialize session state
 		case WORKOUT_SESSION_START_WORKOUT:
 			newState = {
-				...state,
-				workout: action.data.workout,
-				startedAt: action.data.time
+				time: { ...state.time, sessionStart: action.data.time },
+				workout: action.data.workout
 			};
 			return newState;
+		// Modify session state
 		case WORKOUT_SESSION_MODIFY_WORKOUT:
 			newState = handleModifySet(state, action);
 			return newState;
+		// Reset session state
 		case WORKOUT_SESSION_FINISH_WORKOUT:
 			newState = {
-				...state,
-				workout: null,
-				finishedAt: action.time
+				time: { sessionStart: null, restDuration: null, restEnd: null },
+				workout: null
 			};
 			return newState;
+		// Initialize rest timer state
 		case WORKOUT_SESSION_START_REST_TIMER:
 			newState = {
 				...state,
-				restDuration: action.time * 1000,
-				restEndTime: moment.utc().add(action.time, "s")
+				time: {
+					...state.time,
+					restDuration: action.time * 1000,
+					restEnd: moment.utc().add(action.time, "s")
+				}
 			};
 			return newState;
+		// Reset rest timer state
 		case WORKOUT_SESSION_RESET_REST_TIMER:
-			newState = { ...state, restDuration: null, restEndTime: null };
+			newState = {
+				...state,
+				time: { ...state.time, restDuration: null, restEnd: null }
+			};
 			return newState;
 		default:
 			return state;

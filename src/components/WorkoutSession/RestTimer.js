@@ -6,6 +6,57 @@ import moment from "moment";
 import { resetRestTimer } from "../../reducers/workout-session";
 import { Icon } from "../common";
 
+const RestTimer = ({ time, resetRestTimer }) => {
+	const { restDuration, restEnd } = time;
+
+	// Get current timer state from redux
+	const getTimer = () => {
+		const now = new Date();
+		const timer = moment.utc(restEnd - now).format("mm:ss");
+		return timer;
+	};
+
+	// Get timer progress as a percentage
+	const getProgress = () => {
+		const a = moment(restEnd);
+		const b = moment();
+		const difference = a.diff(b);
+		const progress = Math.floor((difference / restDuration) * 100);
+		return progress;
+	};
+
+	// Declare and initialize component timer / progress state
+	const [timer, setTimer] = useState(getTimer());
+	const [progress, setProgress] = useState(getProgress());
+
+	useEffect(() => {
+		// Count down timer (end time - now)
+		const interval = setInterval(() => {
+			setProgress(getProgress(restEnd, restDuration));
+			setTimer(getTimer(restEnd));
+		}, 1000);
+		// Clear countdown timer interval after rest is over and reset rest timer state
+		const timeout = setTimeout(() => {
+			clearInterval(interval);
+			resetRestTimer();
+		}, restDuration);
+		// Clear timeout on unmount
+		return () => clearTimeout(timeout);
+	}, []);
+
+	return (
+		<Container progress={progress} onClick={resetRestTimer}>
+			<Timer>
+				<Icon icon={["far", "clock"]} margin="0px 10px 0px 0px" />
+				{timer}
+			</Timer>
+			<Progress>
+				<Bar progress={progress} />
+			</Progress>
+		</Container>
+	);
+};
+
 const Container = styled.div`
 	position: relative;
 	padding: 5px 10px;
@@ -37,58 +88,7 @@ const Timer = styled.h1`
 	font-size: 14px;
 `;
 
-const getTimer = end => {
-	const now = new Date();
-	const timer = moment.utc(end - now).format("mm:ss");
-	return timer;
-};
-
-const getProgress = (end, duration) => {
-	const a = moment(end);
-	const b = moment();
-	const difference = a.diff(b);
-	const progress = Math.floor((difference / duration) * 100);
-	return progress;
-};
-
-const RestTimer = ({ restDuration, restEndTime, resetRestTimer }) => {
-	const [timer, setTimer] = useState(getTimer(restEndTime));
-	const [progress, setProgress] = useState(
-		getProgress(restEndTime, restDuration)
-	);
-
-	useEffect(() => {
-		// Count down timer (end time - now)
-		const interval = setInterval(() => {
-			setProgress(getProgress(restEndTime, restDuration));
-			setTimer(getTimer(restEndTime));
-		}, 1000);
-		// Clear countdown timer interval after rest is over and reset rest timer state
-		const timeout = setTimeout(() => {
-			clearInterval(interval);
-			resetRestTimer();
-		}, restDuration);
-		// Clear timeout on unmount
-		return () => clearTimeout(timeout);
-	}, []);
-
-	return (
-		<Container progress={progress} onClick={resetRestTimer}>
-			<Timer>
-				<Icon icon={["far", "clock"]} margin="0px 10px 0px 0px" />
-				{timer}
-			</Timer>
-			<Progress>
-				<Bar progress={progress} />
-			</Progress>
-		</Container>
-	);
-};
-
-const mapStateToProps = state => ({
-	restDuration: state.workoutSession.restDuration,
-	restEndTime: state.workoutSession.restEndTime
-});
+const mapStateToProps = state => ({ time: state.workoutSession.time });
 
 const mapActionsToProps = { resetRestTimer };
 

@@ -3,17 +3,20 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import moment from "moment";
 
-const Container = styled.div``;
+const SessionTimer = ({ time }) => {
+	const { sessionStart } = time;
 
-const SessionTimer = ({ startedAt }) => {
-	const [timer, setTimer] = useState(
-		moment.utc(new Date() - startedAt).format("HH:mm:ss")
-	);
+	// Get current timer state from redux
+	const getTimer = () =>
+		moment.utc(new Date() - sessionStart).format("HH:mm:ss");
 
+	// Declare and initialize component timer state
+	const [timer, setTimer] = useState(getTimer);
+
+	// Update component timer state every 1 second
 	useEffect(() => {
 		const interval = setInterval(() => {
-			const time = moment.utc(new Date() - startedAt).format("HH:mm:ss");
-			setTimer(time);
+			setTimer(getTimer);
 		}, 1000);
 		return () => clearInterval(interval);
 	}, []);
@@ -21,8 +24,10 @@ const SessionTimer = ({ startedAt }) => {
 	return <Container>{timer}</Container>;
 };
 
+const Container = styled.div``;
+
 const mapStateToProps = state => ({
-	startedAt: state.workoutSession.startedAt
+	time: state.workoutSession.time
 });
 
 export default connect(mapStateToProps)(SessionTimer);

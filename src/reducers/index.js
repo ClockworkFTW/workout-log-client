@@ -8,6 +8,7 @@ import exerciseFilterReducer from "./exercise-filter";
 import workoutListReducer from "./workout-list";
 import workoutEditorReducer from "./workout-editor";
 import workoutSessionReducer from "./workout-session";
+import workoutHistoryReducer from "./workout-history";
 import measurementListReducer from "./measurement-list";
 import measurementEditorReducer from "./measurement-editor";
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
 	workoutList: workoutListReducer,
 	workoutEditor: workoutEditorReducer,
 	workoutSession: workoutSessionReducer,
+	workoutHistory: workoutHistoryReducer,
 	measurementList: measurementListReducer,
 	measurementEditor: measurementEditorReducer
 });

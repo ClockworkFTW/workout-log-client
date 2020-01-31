@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
-import { RouterLink, ButtonPrimary } from "../common";
+import { ButtonPrimary } from "../common";
 
 const Container = styled.div`
 	width: 100%;
@@ -10,13 +11,14 @@ const Container = styled.div`
 	align-items: center;
 `;
 
-const Menu = ({ name }) => (
-	<Container>
-		<h1>menu</h1>
-		<RouterLink to="/exercise-list">
-			<ButtonPrimary>back</ButtonPrimary>
-		</RouterLink>
-	</Container>
-);
+const Menu = ({ name }) => {
+	const history = useHistory();
+	return (
+		<Container>
+			<h1>{name}</h1>
+			<ButtonPrimary onClick={() => history.goBack()}>back</ButtonPrimary>
+		</Container>
+	);
+};
 
 export default Menu;
