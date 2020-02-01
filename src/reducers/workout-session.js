@@ -1,6 +1,8 @@
 import moment from "moment";
+import uniqid from "uniqid";
 
 const WORKOUT_SESSION_START_WORKOUT = "WORKOUT_SESSION_START_WORKOUT";
+const WORKOUT_SESSION_REORDER_EXERCISE = "WORKOUT_SESSION_REORDER_EXERCISE";
 const WORKOUT_SESSION_MODIFY_WORKOUT = "WORKOUT_SESSION_MODIFY_WORKOUT";
 const WORKOUT_SESSION_FINISH_WORKOUT = "WORKOUT_SESSION_FINISH_WORKOUT";
 
@@ -15,6 +17,11 @@ export const startWorkout = workout => ({
 export const modifySet = (opr, prop, val, exrInd, setInd) => ({
 	type: WORKOUT_SESSION_MODIFY_WORKOUT,
 	edit: { opr, prop, val, exrInd, setInd }
+});
+
+export const reorderExercise = result => ({
+	type: WORKOUT_SESSION_REORDER_EXERCISE,
+	result
 });
 
 export const finishWorkout = () => ({
@@ -44,10 +51,11 @@ const workoutSessionReducer = (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		// Initialize session state
 		case WORKOUT_SESSION_START_WORKOUT:
-			newState = {
-				time: { ...state.time, sessionStart: action.data.time },
-				workout: action.data.workout
-			};
+			newState = handleStartWorkout(state, action);
+			return newState;
+		// Reorder exercises
+		case WORKOUT_SESSION_REORDER_EXERCISE:
+			newState = handleReorderExercise(state, action);
 			return newState;
 		// Modify session state
 		case WORKOUT_SESSION_MODIFY_WORKOUT:
@@ -93,6 +101,36 @@ const newSet = {
 };
 
 // HANDLERS
+
+const handleStartWorkout = (state, action) => {
+	const { time, workout } = action.data;
+
+	// Assign unique ID's to each exercise for DND identification
+	const uniqueExercises = workout.exercises.map(exercise => ({
+		...exercise,
+		exercise: { ...exercise.exercise, dragId: uniqid() }
+	}));
+
+	return {
+		time: { ...state.time, sessionStart: time },
+		workout: { ...workout, exercises: uniqueExercises }
+	};
+};
+
+const handleReorderExercise = (state, action) => {
+	// TODO: handle drop outside droppable
+	const { exercises } = state.workout;
+	const { draggableId, source, destination } = action.result;
+
+	const target = exercises.find(
+		({ exercise }) => exercise.dragId === draggableId
+	);
+
+	exercises.splice(source.index, 1);
+	exercises.splice(destination.index, 0, target);
+
+	return { ...state, workout: { ...state.workout, exercises } };
+};
 
 const handleModifySet = (state, action) => {
 	const { opr, prop, val, exrInd, setInd } = action.edit;

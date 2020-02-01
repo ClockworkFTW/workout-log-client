@@ -7,9 +7,7 @@ const Table = styled.table`
 	width: 100%;
 	margin: 15px 0px;
 `;
-const Header = styled.thead``;
-const Body = styled.tbody``;
-const Th = styled.th`
+const Cell = styled.th`
 	padding: 5px;
 	text-align: ${props => props.align};
 	text-transform: capitalize;
@@ -19,16 +17,16 @@ const Th = styled.th`
 
 const SetTable = ({ exercise }) => (
 	<Table>
-		<Header>
+		<thead>
 			<tr>
-				<Th align="left">set</Th>
-				<Th align="left">type</Th>
-				<Th align="left">reps</Th>
-				<Th align="left">weight</Th>
-				<Th align="left">rest</Th>
+				<Cell align="left">set</Cell>
+				<Cell align="left">type</Cell>
+				<Cell align="left">reps</Cell>
+				<Cell align="left">weight</Cell>
+				<Cell align="left">rest</Cell>
 			</tr>
-		</Header>
-		<Body>
+		</thead>
+		<tbody>
 			{exercise.sets.map((set, index) => (
 				<SetRow
 					key={index}
@@ -37,7 +35,7 @@ const SetTable = ({ exercise }) => (
 					set={set}
 				/>
 			))}
-		</Body>
+		</tbody>
 	</Table>
 );
 

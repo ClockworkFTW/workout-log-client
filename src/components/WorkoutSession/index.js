@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 
 import { createHistory } from "../../reducers/workout-history";
 import {
+	reorderExercise,
 	modifySet,
 	startRestTimer,
 	resetRestTimer,
@@ -19,6 +20,7 @@ const WorkoutSession = props => {
 		session,
 		createHistory,
 		finishWorkout,
+		reorderExercise,
 		modifySet,
 		startRestTimer,
 		resetRestTimer
@@ -36,6 +38,7 @@ const WorkoutSession = props => {
 			/>
 			<Workout
 				workout={workout}
+				reorderExercise={reorderExercise}
 				modifySet={modifySet}
 				startRestTimer={startRestTimer}
 				resetRestTimer={resetRestTimer}
@@ -52,6 +55,7 @@ const mapStateToProps = state => ({
 });
 
 const mapActionsToProps = {
+	reorderExercise,
 	modifySet,
 	startRestTimer,
 	resetRestTimer,
