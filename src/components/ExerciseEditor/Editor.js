@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
@@ -8,16 +8,15 @@ import {
 	updateExercise,
 	deleteExercise
 } from "../../reducers/exercise-list";
-import { Input, Label, Group, ButtonPrimary } from "../common";
-import Anatomy from "../common/Anatomy";
-import SelectInput from "../common/SelectInput";
-import { difficulty, muscle, type } from "../../config";
 
-const Container = styled.div`
-	height: 100%;
-	padding: 20px;
-	overflow: scroll;
-`;
+import Header from "./Steps/Header";
+import Name from "./Steps/Name";
+import Difficulty from "./Steps/Difficulty";
+import Muscle from "./Steps/Muscle";
+import Type from "./Steps/Type";
+import Description from "./Steps/Description";
+import Review from "./Steps/Review";
+import Pagination from "./Pagination";
 
 const Editor = props => {
 	const {
@@ -29,6 +28,8 @@ const Editor = props => {
 		modifyExercise,
 		clearExercise
 	} = props;
+
+	const [step, setStep] = useState(1);
 
 	const handleSubmit = () => {
 		exercise.isNew
@@ -43,59 +44,112 @@ const Editor = props => {
 	};
 
 	return (
-		<Container>
-			<Group>
-				<Label htmlFor="name">name</Label>
-				<Input
-					id="name"
-					type="text"
-					width="200px"
-					value={exercise.name}
-					onChange={event =>
-						modifyExercise("name", event.target.value)
-					}
-				/>
-			</Group>
-			<Group>
-				<Label htmlFor="difficulty">Difficulty</Label>
-				<SelectInput
-					id="difficulty"
-					width="200px"
-					options={difficulty}
-					value={exercise.difficulty}
-					setValue={option => modifyExercise("difficulty", option)}
-				/>
-			</Group>
-			<Group>
-				<Label htmlFor="muscle">Muscle</Label>
-				<SelectInput
-					id="muscle"
-					width="200px"
-					options={muscle}
-					value={exercise.muscle}
-					setValue={option => modifyExercise("muscle", option)}
-				/>
-			</Group>
-			<Group>
-				<Label htmlFor="type">Type</Label>
-				<SelectInput
-					id="type"
-					width="200px"
-					options={type}
-					value={exercise.type}
-					setValue={option => modifyExercise("type", option)}
-				/>
-			</Group>
-			<Anatomy active={exercise.muscle} width="200px" />
-			<ButtonPrimary onClick={handleSubmit}>
-				{exercise.isNew ? "create" : "update"}
-			</ButtonPrimary>
-			{!exercise.isNew && (
-				<ButtonPrimary onClick={handleDelete}>delete</ButtonPrimary>
-			)}
-		</Container>
+		<Wrapper>
+			<Container>
+				{step === 1 && (
+					<Step>
+						<Header
+							step={step}
+							title="Name"
+							caption="Give your exercise a name"
+						/>
+						<Name
+							name={exercise.name}
+							modifyExercise={modifyExercise}
+						/>
+					</Step>
+				)}
+				{step === 2 && (
+					<Step>
+						<Header
+							step={step}
+							title="Difficulty"
+							caption="Set the difficulty level of your exercise"
+						/>
+						<Difficulty
+							difficulty={exercise.difficulty}
+							modifyExercise={modifyExercise}
+						/>
+					</Step>
+				)}
+				{step === 3 && (
+					<Step>
+						<Header
+							step={step}
+							title="Type"
+							caption="Set the exercise type"
+						/>
+						<Type
+							type={exercise.type}
+							modifyExercise={modifyExercise}
+						/>
+					</Step>
+				)}
+				{step === 4 && (
+					<Step>
+						<Header
+							step={step}
+							title="Muscle"
+							caption="Select the main muscle group"
+						/>
+						<Muscle
+							muscle={exercise.muscle}
+							modifyExercise={modifyExercise}
+						/>
+					</Step>
+				)}
+				{step === 5 && (
+					<Step>
+						<Header
+							step={step}
+							title="Description"
+							caption="Add a description to your exercise"
+						/>
+						<Description
+							description={exercise.description}
+							modifyExercise={modifyExercise}
+						/>
+					</Step>
+				)}
+				{step === 6 && (
+					<Step>
+						<Header
+							step={step}
+							title="Review"
+							caption="Make sure everything has been entered correctly"
+						/>
+						<Review
+							exercise={exercise}
+							handleSubmit={handleSubmit}
+							handleDelete={handleDelete}
+						/>
+					</Step>
+				)}
+				<Pagination step={step} setStep={setStep} />
+			</Container>
+		</Wrapper>
 	);
 };
+
+const Wrapper = styled.div`
+	height: 100%;
+	padding: 20px;
+	overflow: scroll;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
+const Container = styled.div`
+	flex: 0 1 400px;
+	background: #ffffff;
+	border-radius: 5px;
+	box-shadow: 0px 3px 6px 0px rgba(102, 126, 234, 0.2);
+`;
+
+const Step = styled.div`
+	padding: 50px 30px;
+`;
 
 const mapStateToProps = state => ({
 	token: state.user.data.token,

@@ -1,39 +1,37 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { Header3 } from "../common";
-import Chart from "../common/Chart";
+import { editMeasurement } from "../../reducers/measurement-editor";
 
-const Wrapper = styled.div`
+import Card from "./Card";
+import ErrorMessage from "../common/ErrorMessage";
+
+const List = ({ measurements, editMeasurement, error }) => {
+	return !error ? (
+		<Container>
+			{measurements.sections.map(section => (
+				<Card
+					key={section.id}
+					section={section}
+					editMeasurement={editMeasurement}
+				/>
+			))}
+		</Container>
+	) : (
+		<ErrorMessage message={error.response.data.message} />
+	);
+};
+
+const Container = styled.div`
 	padding: 20px 20px 0px 20px;
 `;
 
-const Container = styled.div`
-	margin-bottom: 20px;
-	&:hover {
-		cursor: pointer;
-	}
-`;
+const mapStateToProps = state => ({
+	measurements: state.measurementList.data,
+	error: state.measurementList.error
+});
 
-const List = ({ measurements, editMeasurement }) => (
-	<Wrapper>
-		{measurements.sections.map(section => (
-			<Container
-				key={section.id}
-				onClick={() => editMeasurement(section)}
-			>
-				<Header3>{section.id}</Header3>
-				<Chart
-					width="100%"
-					height="200px"
-					color="#687eea"
-					grid={false}
-					area={true}
-					data={section}
-				/>
-			</Container>
-		))}
-	</Wrapper>
-);
+const mapActionsToProps = { editMeasurement };
 
-export default List;
+export default connect(mapStateToProps, mapActionsToProps)(List);

@@ -72,7 +72,7 @@ const handleAddMeasurement = state => {
 			.format("YYYY-MM-DD");
 	}
 
-	const y = data.length === 0 ? 0 : data[data.length - 1].y;
+	const y = data.length === 0 ? 0 : data[0].y;
 
 	// Return new data point
 	return { ...state, data: [...data, { x, y }] };

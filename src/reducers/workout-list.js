@@ -4,14 +4,17 @@ const WORKOUT_LIST_REQUEST_PENDING = "WORKOUT_LIST_REQUEST_PENDING";
 const WORKOUT_LIST_REQUEST_SUCCESS = "WORKOUT_LIST_REQUEST_SUCCESS";
 const WORKOUT_LIST_REQUEST_ERROR = "WORKOUT_LIST_REQUEST_ERROR";
 
-const requestPending = () => ({ type: WORKOUT_LIST_REQUEST_PENDING });
+const requestPending = () => ({
+	type: WORKOUT_LIST_REQUEST_PENDING
+});
 const requestSuccess = (type, data) => ({
 	type: WORKOUT_LIST_REQUEST_SUCCESS,
 	response: { type, data }
 });
-const requestError = error => ({ type: WORKOUT_LIST_REQUEST_ERROR, error });
-
-const sleep = () => new Promise(r => setTimeout(r, 5000));
+const requestError = error => ({
+	type: WORKOUT_LIST_REQUEST_ERROR,
+	error
+});
 
 export const fetchWorkouts = token => {
 	return async dispatch => {
@@ -21,8 +24,6 @@ export const fetchWorkouts = token => {
 			dispatch(requestSuccess("fetch", workouts));
 		} catch (error) {
 			dispatch(requestError(error));
-			await sleep();
-			dispatch(requestError(null));
 		}
 	};
 };
@@ -35,8 +36,6 @@ export const createWorkout = (token, workout) => {
 			dispatch(requestSuccess("create", newWorkout));
 		} catch (error) {
 			dispatch(requestError(error));
-			await sleep();
-			dispatch(requestError(null));
 		}
 	};
 };
@@ -49,8 +48,6 @@ export const updateWorkout = (token, workout) => {
 			dispatch(requestSuccess("update", updatedWorkout));
 		} catch (error) {
 			dispatch(requestError(error));
-			await sleep();
-			dispatch(requestError(null));
 		}
 	};
 };
@@ -63,8 +60,6 @@ export const deleteWorkout = (token, id) => {
 			dispatch(requestSuccess("delete", id));
 		} catch (error) {
 			dispatch(requestError(error));
-			await sleep();
-			dispatch(requestError(null));
 		}
 	};
 };

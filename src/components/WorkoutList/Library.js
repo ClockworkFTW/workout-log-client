@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { fetchWorkouts } from "../../reducers/workout-list";
+import { startWorkout } from "../../reducers/workout-session";
+import { editWorkout } from "../../reducers/workout-editor";
+
 import Card from "./Card";
-import ErrorMessage from "./ErrorMessage";
+import ErrorMessage from "../common/ErrorMessage";
 
 const Container = styled.div`
 	height: 100%;
@@ -12,28 +14,31 @@ const Container = styled.div`
 	overflow: scroll;
 `;
 
-const Library = ({ token, workouts, fetchWorkouts, error }) => {
-	useEffect(() => {
-		if (workouts.length === 0) {
-			fetchWorkouts(token);
-		}
-	}, []);
-
-	return error ? (
-		<ErrorMessage message={error.response.data.message} />
-	) : (
+const Library = ({ workouts, startWorkout, editWorkout, error }) => {
+	return !error ? (
 		<Container>
 			{workouts.map(workout => (
-				<Card key={workout._id} workout={workout} />
+				<Card
+					key={workout._id}
+					workout={workout}
+					startWorkout={startWorkout}
+					editWorkout={editWorkout}
+				/>
 			))}
 		</Container>
+	) : (
+		<ErrorMessage message={error.response.data.message} />
 	);
 };
 
 const mapStateToProps = state => ({
-	token: state.user.data.token,
 	workouts: state.workoutList.data,
 	error: state.workoutList.error
 });
 
-export default connect(mapStateToProps, { fetchWorkouts })(Library);
+const mapActionsToProps = {
+	startWorkout,
+	editWorkout
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(Library);

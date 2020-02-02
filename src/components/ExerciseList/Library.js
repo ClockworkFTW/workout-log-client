@@ -1,27 +1,23 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
 import Card from "./Card";
-import { fetchExercises } from "../../reducers/exercise-list";
+import ErrorMessage from "../common/ErrorMessage";
 
 const Container = styled.div`
 	padding: 20px 10px 0px 10px;
 `;
 
-const Library = ({ token, exercises, fetchExercises }) => {
-	useEffect(() => {
-		if (exercises.length === 0) {
-			fetchExercises(token);
-		}
-	}, []);
-
-	return (
+const Library = ({ exercises, error }) => {
+	return !error ? (
 		<Container>
 			{exercises.map(exercise => (
 				<Card key={exercise._id} exercise={exercise} />
 			))}
 		</Container>
+	) : (
+		<ErrorMessage message={error.response.data.message} />
 	);
 };
 
@@ -47,8 +43,8 @@ const filterExercises = state => {
 };
 
 const mapStateToProps = state => ({
-	token: state.user.data.token,
-	exercises: filterExercises(state)
+	exercises: filterExercises(state),
+	error: state.exerciseList.error
 });
 
-export default connect(mapStateToProps, { fetchExercises })(Library);
+export default connect(mapStateToProps)(Library);

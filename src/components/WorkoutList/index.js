@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
+import { initWorkout } from "../../reducers/workout-editor";
+
 import MainLayout from "../common/MainLayout";
 import Menu from "./Menu";
 import Library from "./Library";
-import { initWorkout } from "../../reducers/workout-editor";
 
 const WorkoutList = ({ initWorkout, isEditing, isSession }) => {
 	// Check local storage to see if a workout was being edited

@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Header3 } from "../common";
+import { Header3 } from "./index";
 
 const Wrapper = styled.div`
-	height: calc(100% - 75px);
+	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
