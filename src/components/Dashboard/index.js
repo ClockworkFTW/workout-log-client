@@ -4,17 +4,29 @@ import styled from "styled-components";
 
 import { fetchExercises } from "../../reducers/exercise-list";
 import { fetchWorkouts } from "../../reducers/workout-list";
+import { fetchHistory } from "../../reducers/workout-history";
 import { fetchMeasurements } from "../../reducers/measurement-list";
+
 import MainLayout from "../common/MainLayout";
+import Profile from "./Profile";
+import History from "./History";
 
 const Dashboard = props => {
-	const { user, fetchExercises, fetchWorkouts, fetchMeasurements } = props;
+	const {
+		user,
+		sessions,
+		fetchExercises,
+		fetchWorkouts,
+		fetchHistory,
+		fetchMeasurements
+	} = props;
 
 	// Fetch all data
 	useEffect(() => {
 		const { token } = user;
 		fetchExercises(token);
 		fetchWorkouts(token);
+		fetchHistory(token);
 		fetchMeasurements(token);
 	}, []);
 
@@ -24,7 +36,8 @@ const Dashboard = props => {
 				<h1>menu</h1>
 			</Menu>
 			<Container>
-				<h1>{user.username}</h1>
+				<Profile user={user} />
+				<History sessions={sessions} />
 			</Container>
 		</MainLayout>
 	);
@@ -41,12 +54,14 @@ const Container = styled.div`
 `;
 
 const mapStateToProp = state => ({
-	user: state.user.data
+	user: state.user.data,
+	sessions: state.workoutHistory.data
 });
 
 const mapActionsToProps = {
 	fetchExercises,
 	fetchWorkouts,
+	fetchHistory,
 	fetchMeasurements
 };
 

@@ -16,8 +16,6 @@ const requestError = error => ({
 	error
 });
 
-const sleep = () => new Promise(r => setTimeout(r, 5000));
-
 export const createHistory = (token, session) => {
 	return async dispatch => {
 		dispatch(requestPending());
@@ -26,8 +24,18 @@ export const createHistory = (token, session) => {
 			dispatch(requestSuccess("create", newHistory));
 		} catch (error) {
 			dispatch(requestError(error));
-			await sleep();
-			dispatch(requestError(null));
+		}
+	};
+};
+
+export const fetchHistory = token => {
+	return async dispatch => {
+		dispatch(requestPending());
+		try {
+			const history = await historyServices.read(token);
+			dispatch(requestSuccess("read", history));
+		} catch (error) {
+			dispatch(requestError(error));
 		}
 	};
 };
@@ -61,6 +69,8 @@ const workoutHistoryReducer = (state = INITIAL_STATE, action) => {
 
 const handleModifyData = (type, newData, oldData) => {
 	switch (type) {
+		case "read":
+			return newData;
 		case "create":
 			return [...oldData, newData];
 		default:

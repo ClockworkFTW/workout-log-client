@@ -9,4 +9,11 @@ const create = async (token, session) => {
 	return result.data;
 };
 
-export default { create };
+const read = async token => {
+	const result = await axios.get(baseUrl, {
+		headers: { Authorization: `Bearer ${token}` }
+	});
+	return result.data;
+};
+
+export default { create, read };
