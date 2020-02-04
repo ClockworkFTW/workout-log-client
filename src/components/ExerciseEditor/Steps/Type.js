@@ -1,21 +1,39 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Label } from "../../common";
-import SelectInput from "../../common/SelectInput";
 import { type as typeOptions } from "../../../config";
-
-const Container = styled.div``;
 
 const Type = ({ type, modifyExercise }) => (
 	<Container>
-		<SelectInput
-			width="100%"
-			options={typeOptions}
-			value={type}
-			setValue={option => modifyExercise("type", option)}
-		/>
+		<Options>
+			{typeOptions.map(option => (
+				<Option
+					active={type === option}
+					onClick={() => modifyExercise("type", option)}
+				>
+					{option}
+				</Option>
+			))}
+		</Options>
 	</Container>
 );
+
+const Container = styled.div``;
+const Options = styled.ul``;
+const Option = styled.li`
+	display: inline-block;
+	margin: 4px;
+	padding: 5px;
+	text-transform: uppercase;
+	font-size: 12px;
+	font-weight: 700;
+	color: #ffffff;
+	background: ${props => (props.active ? "#5a67d8" : "#809cf5")};
+	border-radius: 4px;
+	&:hover {
+		cursor: pointer;
+		background: #5a67d8;
+	}
+`;
 
 export default Type;

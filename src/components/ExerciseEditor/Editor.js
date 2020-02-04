@@ -146,16 +146,11 @@ const Wrapper = styled.div`
 	height: 100%;
 	padding: 20px;
 	overflow: scroll;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 `;
 
 const Container = styled.div`
-	flex: 0 1 400px;
-	background: #ffffff;
-	border-radius: 5px;
-	box-shadow: 0px 3px 6px 0px rgba(102, 126, 234, 0.2);
+	max-width: 600px;
+	margin: 0px auto;
 `;
 
 const Step = styled.div`
