@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 import Anatomy from "../common/Anatomy";
-import Description from "./Description";
 import History from "./History";
+import Instructions from "./Instructions";
 
 const Container = styled.div`
 	height: 100%;
@@ -14,7 +14,7 @@ const Container = styled.div`
 const View = ({ exercise }) => (
 	<Container>
 		<Anatomy width="200px" active={exercise.muscle} />
-		<Description description={exercise.description} />
+		<Instructions instructions={exercise.instructions} />
 		<History id={exercise._id} />
 	</Container>
 );

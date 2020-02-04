@@ -4,6 +4,10 @@ const EDIT_EXERCISE = "EDIT_EXERCISE";
 const MODIFY_EXERCISE = "MODIFY_EXERCISE";
 const CLEAR_EXERCISE = "CLEAR_EXERCISE";
 
+const ADD_DESCRIPTION = "ADD_DESCRIPTION";
+const MODIFY_DESCRIPTION = "MODIFY_DESCRIPTION";
+const REMOVE_DESCRIPTION = "REMOVE_DESCRIPTION";
+
 // Pull current state from local storage and set to exercise editor state
 export const initExercise = () => {
 	const exercise = JSON.parse(
@@ -24,6 +28,20 @@ export const modifyExercise = (prop, val) => ({
 	edit: { prop, val }
 });
 
+export const addInstruction = () => ({
+	type: ADD_DESCRIPTION
+});
+
+export const modifyInstruction = (ind, val) => ({
+	type: MODIFY_DESCRIPTION,
+	edit: { ind, val }
+});
+
+export const removeInstruction = ind => ({
+	type: REMOVE_DESCRIPTION,
+	ind
+});
+
 // Clear local storage and exercise editor state
 export const clearExercise = () => {
 	localStorage.removeItem("workoutLogExerciseEditor");
@@ -42,7 +60,7 @@ const constructExercise = exercise =>
 				difficulty: "beginner",
 				type: "barbell",
 				muscle: "chest",
-				description: "",
+				instructions: [],
 				isNew: true
 		  };
 
@@ -67,11 +85,41 @@ const exerciseEditorReducer = (state = null, action) => {
 			newState = { ...state, [action.edit.prop]: action.edit.val };
 			setExerciseCache(newState);
 			return newState;
+		case ADD_DESCRIPTION:
+			newState = handleAddInstruction(state);
+			setExerciseCache(newState);
+			return newState;
+		case MODIFY_DESCRIPTION:
+			newState = handleModifyInstruction(state, action);
+			setExerciseCache(newState);
+			return newState;
+		case REMOVE_DESCRIPTION:
+			newState = handleRemoveInstruction(state, action);
+			setExerciseCache(newState);
+			return newState;
 		case CLEAR_EXERCISE:
 			return null;
 		default:
 			return state;
 	}
+};
+
+const handleAddInstruction = state => {
+	const instructions = state.instructions.concat("");
+	return { ...state, instructions };
+};
+
+const handleModifyInstruction = (state, action) => {
+	const { ind, val } = action.edit;
+	const instructions = state.instructions.map((e, i) =>
+		i === ind ? val : e
+	);
+	return { ...state, instructions };
+};
+
+const handleRemoveInstruction = (state, action) => {
+	const instructions = state.instructions.filter((e, i) => i !== action.ind);
+	return { ...state, instructions };
 };
 
 export default exerciseEditorReducer;

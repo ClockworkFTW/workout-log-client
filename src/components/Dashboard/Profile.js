@@ -9,6 +9,8 @@ const Profile = ({ user }) => (
 	</Container>
 );
 
-const Container = styled.div``;
+const Container = styled.div`
+	margin-bottom: 20px;
+`;
 
 export default Profile;

@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { modifyExercise, clearExercise } from "../../reducers/exercise-editor";
+import {
+	modifyExercise,
+	addInstruction,
+	modifyInstruction,
+	removeInstruction,
+	clearExercise
+} from "../../reducers/exercise-editor";
 import {
 	createExercise,
 	updateExercise,
@@ -14,7 +20,7 @@ import Name from "./Steps/Name";
 import Difficulty from "./Steps/Difficulty";
 import Muscle from "./Steps/Muscle";
 import Type from "./Steps/Type";
-import Description from "./Steps/Description";
+import Instructions from "./Steps/Instructions";
 import Review from "./Steps/Review";
 import Pagination from "./Pagination";
 
@@ -26,6 +32,9 @@ const Editor = props => {
 		updateExercise,
 		deleteExercise,
 		modifyExercise,
+		addInstruction,
+		modifyInstruction,
+		removeInstruction,
 		clearExercise
 	} = props;
 
@@ -102,12 +111,14 @@ const Editor = props => {
 					<Step>
 						<Header
 							step={step}
-							title="Description"
+							title="Instruction"
 							caption="Add a description to your exercise"
 						/>
-						<Description
-							description={exercise.description}
-							modifyExercise={modifyExercise}
+						<Instructions
+							instructions={exercise.instructions}
+							addInstruction={addInstruction}
+							modifyInstruction={modifyInstruction}
+							removeInstruction={removeInstruction}
 						/>
 					</Step>
 				)}
@@ -148,7 +159,7 @@ const Container = styled.div`
 `;
 
 const Step = styled.div`
-	padding: 50px 30px;
+	padding: 30px 30px 50px 30px;
 `;
 
 const mapStateToProps = state => ({
@@ -156,10 +167,15 @@ const mapStateToProps = state => ({
 	exercise: state.exerciseEditor
 });
 
-export default connect(mapStateToProps, {
+const mapActionsToProps = {
 	createExercise,
 	updateExercise,
 	deleteExercise,
 	modifyExercise,
+	addInstruction,
+	modifyInstruction,
+	removeInstruction,
 	clearExercise
-})(Editor);
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(Editor);
