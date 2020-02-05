@@ -16,6 +16,7 @@ const Measurements = ({ measurements }) => {
 				setValue={option => setSelection(option)}
 			/>
 			<Chart
+				spark={true}
 				width="100%"
 				height="200px"
 				color="#687eea"

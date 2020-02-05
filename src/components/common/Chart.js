@@ -12,11 +12,11 @@ const Wrapper = styled.div`
 const Container = styled.div`
 	width: inherit;
 	height: inherit;
+	padding-top: 20px;
 	position: relative;
-	padding: 20px;
-	border: 1px solid #e2e8f0;
-	border-radius: 5px;
+	border-radius: 4px;
 	background: #ffffff;
+	overflow: hidden;
 `;
 
 const Info = styled.h1`
@@ -29,6 +29,7 @@ const Info = styled.h1`
 `;
 
 const margin = { top: 10, right: 10, bottom: 30, left: 40 };
+const sparkMargin = { top: 10, right: 0, bottom: 30, left: 0 };
 
 const xScale = {
 	type: "time",
@@ -58,31 +59,34 @@ const axisLeft = {
 	tickRotation: 0
 };
 
-const Chart = ({ width, height, padding, color, grid, area, data }) => (
+const Chart = ({ spark, width, height, padding, color, grid, area, data }) => (
 	<Wrapper width={width} height={height} padding={padding}>
-		<Container>
-			{data.data.length !== 0 ? (
+		{data.data.length !== 0 ? (
+			<Container>
+				<Overlay />
 				<ResponsiveLine
 					data={[data]}
 					colors={color}
-					margin={margin}
+					margin={spark ? sparkMargin : margin}
 					xScale={xScale}
 					yScale={yScale}
-					curve="linear"
+					curve="cardinal"
 					axisTop={null}
 					axisRight={null}
-					axisBottom={axisBottom}
-					axisLeft={axisLeft}
+					axisBottom={spark ? null : axisBottom}
+					axisLeft={spark ? null : axisLeft}
 					enableGridX={grid}
 					enableGridY={grid}
-					enablePoints={true}
+					enablePoints={spark ? false : true}
 					pointSize={10}
 					pointColor="#ffffff"
 					pointBorderWidth={2}
 					pointBorderColor={color}
 					enableArea={area}
 				/>
-			) : (
+			</Container>
+		) : (
+			<Container>
 				<Info>
 					<FontAwesomeIcon
 						icon={["far", "sticky-note"]}
@@ -90,9 +94,22 @@ const Chart = ({ width, height, padding, color, grid, area, data }) => (
 					/>
 					No Data
 				</Info>
-			)}
-		</Container>
+			</Container>
+		)}
 	</Wrapper>
 );
+
+const Overlay = styled.div`
+	z-index: 10;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	background: linear-gradient(
+		rgba(255, 255, 255, 0) 50%,
+		rgba(255, 255, 255, 1) 100%
+	);
+`;
 
 export default Chart;

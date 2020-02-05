@@ -8,8 +8,9 @@ const Card = ({ measurement, editMeasurement }) => (
 	<Container onClick={() => editMeasurement(measurement)}>
 		<Header3>{measurement.id}</Header3>
 		<Chart
+			spark={true}
 			width="100%"
-			height="200px"
+			height="100px"
 			color="#687eea"
 			grid={false}
 			area={true}

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Wrapper = styled.div`
+	z-index: 100;
 	position: relative;
 	margin: ${props => props.margin};
 	width: ${props => props.width};
