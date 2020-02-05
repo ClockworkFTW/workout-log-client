@@ -13,6 +13,7 @@ const History = ({ sessions }) =>
 	) : null;
 
 const Container = styled.div`
+	margin: 20px 0px;
 	display: flex;
 	flex-wrap: nowrap;
 	overflow-x: auto;

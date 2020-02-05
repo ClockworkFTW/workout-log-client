@@ -8,13 +8,15 @@ import { fetchHistory } from "../../reducers/workout-history";
 import { fetchMeasurements } from "../../reducers/measurement-list";
 
 import MainLayout from "../common/MainLayout";
-import Profile from "./Profile";
+import Welcome from "./Welcome";
 import History from "./History";
+import Measurements from "./Measurements";
 
 const Dashboard = props => {
 	const {
 		user,
 		sessions,
+		measurements,
 		fetchExercises,
 		fetchWorkouts,
 		fetchHistory,
@@ -36,8 +38,9 @@ const Dashboard = props => {
 				<h1>menu</h1>
 			</Menu>
 			<Container>
-				<Profile user={user} />
+				<Welcome user={user} />
 				<History sessions={sessions} />
+				<Measurements measurements={measurements} />
 			</Container>
 		</MainLayout>
 	);
@@ -55,7 +58,8 @@ const Container = styled.div`
 
 const mapStateToProp = state => ({
 	user: state.user.data,
-	sessions: state.workoutHistory.data
+	sessions: state.workoutHistory.data,
+	measurements: state.measurementList.data
 });
 
 const mapActionsToProps = {

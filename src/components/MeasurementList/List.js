@@ -10,10 +10,10 @@ import ErrorMessage from "../common/ErrorMessage";
 const List = ({ measurements, editMeasurement, error }) => {
 	return !error ? (
 		<Container>
-			{measurements.sections.map(section => (
+			{measurements.map(measurement => (
 				<Card
-					key={section.id}
-					section={section}
+					key={measurement.id}
+					measurement={measurement}
 					editMeasurement={editMeasurement}
 				/>
 			))}

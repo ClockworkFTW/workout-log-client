@@ -29,7 +29,6 @@ export const muscle = [
 ];
 
 export const measurements = [
-	"height",
 	"weight",
 	"bodyfat percentage",
 	"neck",

@@ -109,7 +109,7 @@ const sharedHeader = css`
 	margin: ${props => props.margin};
 	font-weight: 700;
 	text-transform: capitalize;
-	color: #2d3748;
+	color: ${props => (props.color === "light" ? "#ffffff" : "#2d3748")};
 `;
 
 export const Header1 = styled.h1`
@@ -141,7 +141,7 @@ export const Header6 = styled.h6`
 export const Paragraph = styled.p`
 	margin-bottom: 20px;
 	font-size: 14px;
-	color: #718196;
+	color: ${props => (props.color === "light" ? "#ffffff" : "#718196")};
 `;
 
 // Links

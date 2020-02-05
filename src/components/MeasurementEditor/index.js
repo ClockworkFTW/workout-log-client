@@ -35,8 +35,8 @@ const MeasurementEditor = props => {
 
 	// Save measurement changes to database and clear editor state
 	const handleSave = () => {
-		const sections = measurements.sections.map(section =>
-			section.id === isEditing.id ? isEditing : section
+		const sections = measurements.map(measurement =>
+			measurement.id === isEditing.id ? isEditing : measurement
 		);
 		updateMeasurements(token, { sections });
 		clearMeasurement();
